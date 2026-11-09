@@ -1112,6 +1112,14 @@
    "place": "Raphaels",
    "desc": "Weihnachten",
    "created": 1794255437423
+  },
+  {
+   "id": "bbefd97e-1a28-4dae-a918-8fd0c9fa1757",
+   "photo": "fotos/bbefd97e-1a28-4dae-a918-8fd0c9fa1757.jpg",
+   "date": "2015-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794255458175
   }
  ]
 }
