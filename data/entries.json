@@ -40,6 +40,14 @@
    "place": "Schwabach",
    "desc": "",
    "created": 1794239460381
+  },
+  {
+   "id": "ee8b8ffd-726e-4265-ba15-5e446a2f6def",
+   "photo": "fotos/ee8b8ffd-726e-4265-ba15-5e446a2f6def.jpg",
+   "date": "2003-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794239527067
   }
  ]
 }
