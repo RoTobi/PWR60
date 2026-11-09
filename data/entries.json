@@ -688,6 +688,14 @@
    "place": "MTW",
    "desc": "45. Geburtstag",
    "created": 1794243475222
+  },
+  {
+   "id": "00037e80-150e-4e18-a212-4ccdf7c597ff",
+   "photo": "fotos/00037e80-150e-4e18-a212-4ccdf7c597ff.jpg",
+   "date": "2011-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794243499190
   }
  ]
 }
