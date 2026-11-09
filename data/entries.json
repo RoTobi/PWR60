@@ -1032,6 +1032,14 @@
    "place": "MTW",
    "desc": "Weihnachten",
    "created": 1794255220959
+  },
+  {
+   "id": "e0fb5007-7e99-4c10-b697-aff4b15a0071",
+   "photo": "fotos/e0fb5007-7e99-4c10-b697-aff4b15a0071.jpg",
+   "date": "2015-04",
+   "place": "Düsseldorf",
+   "desc": "",
+   "created": 1794255247216
   }
  ]
 }
