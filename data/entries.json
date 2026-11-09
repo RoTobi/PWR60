@@ -704,6 +704,14 @@
    "place": "MTW",
    "desc": "Karneval",
    "created": 1794244223804
+  },
+  {
+   "id": "c7a0f690-5ab7-46ac-ab6f-dfcffa6ce0f1",
+   "photo": "fotos/c7a0f690-5ab7-46ac-ab6f-dfcffa6ce0f1.jpg",
+   "date": "2012-08",
+   "place": "Bad Füssing",
+   "desc": "",
+   "created": 1794244246652
   }
  ]
 }
