@@ -16,6 +16,14 @@
    "place": "Duisburger Zoo",
    "desc": "",
    "created": 1794239280715
+  },
+  {
+   "id": "9e88de77-62e0-4e32-8ceb-c1300c571e8a",
+   "photo": "fotos/9e88de77-62e0-4e32-8ceb-c1300c571e8a.jpg",
+   "date": "2003-06",
+   "place": "MTW",
+   "desc": "",
+   "created": 1794239330162
   }
  ]
 }
