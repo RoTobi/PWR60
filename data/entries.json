@@ -88,6 +88,14 @@
    "place": "Vogelpark",
    "desc": "",
    "created": 1794239650318
+  },
+  {
+   "id": "b8cd647d-4945-4936-a16d-73cd172871aa",
+   "photo": "fotos/b8cd647d-4945-4936-a16d-73cd172871aa.jpg",
+   "date": "2005-01",
+   "place": "Langenfeld",
+   "desc": "",
+   "created": 1794239685083
   }
  ]
 }
