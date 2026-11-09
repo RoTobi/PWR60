@@ -808,6 +808,14 @@
    "place": "MTW",
    "desc": "Weihnachten",
    "created": 1794244511939
+  },
+  {
+   "id": "ba5fea9d-fd8b-41eb-9c19-32eb1de3defd",
+   "photo": "fotos/ba5fea9d-fd8b-41eb-9c19-32eb1de3defd.jpg",
+   "date": "2013-01",
+   "place": "Leuzdorf",
+   "desc": "",
+   "created": 1794245793336
   }
  ]
 }
