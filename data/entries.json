@@ -232,6 +232,14 @@
    "place": "MTW",
    "desc": "Kommunion Toni",
    "created": 1794240118910
+  },
+  {
+   "id": "9d34208e-33d1-4300-8a71-71311b9812d7",
+   "photo": "fotos/9d34208e-33d1-4300-8a71-71311b9812d7.jpg",
+   "date": "2006-06",
+   "place": "",
+   "desc": "WM Eröffnung",
+   "created": 1794240143001
   }
  ]
 }
