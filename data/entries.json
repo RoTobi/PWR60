@@ -392,6 +392,14 @@
    "place": "Schloss Burg",
    "desc": "",
    "created": 1794240590212
+  },
+  {
+   "id": "73771d94-5175-4754-8aa7-10b9032159d2",
+   "photo": "fotos/73771d94-5175-4754-8aa7-10b9032159d2.jpg",
+   "date": "2008-11",
+   "place": "Kegelbahn",
+   "desc": "42. Geburtstag",
+   "created": 1794240617263
   }
  ]
 }
