@@ -912,6 +912,14 @@
    "place": "MTW",
    "desc": "ALS Ice Bucket Challenge",
    "created": 1794253581253
+  },
+  {
+   "id": "e3d1a514-2708-4798-93cb-a184e8c70a48",
+   "photo": "fotos/e3d1a514-2708-4798-93cb-a184e8c70a48.jpg",
+   "date": "2014-10",
+   "place": "Frankfurt",
+   "desc": "",
+   "created": 1794253613653
   }
  ]
 }
