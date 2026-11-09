@@ -600,6 +600,14 @@
    "place": "Wien",
    "desc": "",
    "created": 1794241245265
+  },
+  {
+   "id": "7a24bce1-8c1f-4735-b4ce-7e7ce6eb8029",
+   "photo": "fotos/7a24bce1-8c1f-4735-b4ce-7e7ce6eb8029.jpg",
+   "date": "2010-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794241271726
   }
  ]
 }
