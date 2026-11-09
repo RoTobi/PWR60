@@ -888,6 +888,14 @@
    "place": "MTW",
    "desc": "Sylvester",
    "created": 1794246044022
+  },
+  {
+   "id": "fd350bf4-ae44-4d2c-9b9e-61a9c10a95b2",
+   "photo": "fotos/fd350bf4-ae44-4d2c-9b9e-61a9c10a95b2.jpg",
+   "date": "2013-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794246078062
   }
  ]
 }
