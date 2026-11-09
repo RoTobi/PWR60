@@ -920,6 +920,14 @@
    "place": "Frankfurt",
    "desc": "",
    "created": 1794253613653
+  },
+  {
+   "id": "b6e7f0f8-29bd-4908-923f-4fefe3627e51",
+   "photo": "fotos/b6e7f0f8-29bd-4908-923f-4fefe3627e51.jpg",
+   "date": "2014-07",
+   "place": "Sardinien",
+   "desc": "",
+   "created": 1794253645596
   }
  ]
 }
