@@ -824,6 +824,14 @@
    "place": "",
    "desc": "Konfirmation Frederik",
    "created": 1794245833920
+  },
+  {
+   "id": "c2f18172-93d1-4393-a1bb-070ecfb4c363",
+   "photo": "fotos/c2f18172-93d1-4393-a1bb-070ecfb4c363.jpg",
+   "date": "2013-04",
+   "place": "Berlin",
+   "desc": "",
+   "created": 1794245857039
   }
  ]
 }
