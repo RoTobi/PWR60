@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peter wird 60 – Eine Zeitreise</title>
+<style>
+:root{
+  --bg:#0f1226; --bg2:#171b3a; --card:#1c2145; --text:#f3f1ea; --muted:#a9aecb;
+  --gold:#ffc857; --coral:#ff6b81; --teal:#4ecdc4; --violet:#8e7dff;
+  --tb:60px;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--sans);color:var(--text);line-height:1.5;min-height:100vh;
+  background:
+    radial-gradient(1100px 600px at 8% -10%,rgba(142,125,255,.22),transparent 60%),
+    radial-gradient(900px 500px at 100% 8%,rgba(255,107,129,.16),transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+body.noscroll{overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- Intro ---------- */
+#intro{
+  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;text-align:center;
+  background:linear-gradient(160deg,#150f3d 0%,#3a1a5e 55%,#a6366f 120%);
+  transition:opacity .7s ease,transform .7s ease;overflow:hidden;
+}
+#intro.hide{opacity:0;transform:scale(1.04);pointer-events:none}
+#balloons{position:absolute;inset:0;pointer-events:none}
+.balloon{
+  position:absolute;bottom:-200px;width:var(--w);height:calc(var(--w)*1.22);
+  border-radius:50% 50% 48% 48%/55% 55% 45% 45%;
+  background:radial-gradient(circle at 30% 26%,rgba(255,255,255,.7),transparent 32%),var(--c);
+  box-shadow:inset -8px -10px 18px rgba(0,0,0,.18);
+  animation:rise var(--d) linear var(--dl) infinite;
+}
+.balloon::after{content:"";position:absolute;left:50%;top:100%;width:1.5px;height:110px;background:rgba(255,255,255,.35)}
+@keyframes rise{
+  0%{transform:translate(0,0) rotate(-4deg)}
+  50%{transform:translate(var(--sway),-70vh) rotate(4deg)}
+  100%{transform:translate(0,-140vh) rotate(-4deg)}
+}
+.intro-content{position:relative;z-index:2;padding:24px}
+.intro-sub{letter-spacing:.35em;text-transform:uppercase;font-size:clamp(12px,2.6vw,16px);color:#ffd9e2;opacity:.9}
+.intro-num{
+  font-family:var(--serif);font-weight:700;line-height:1;margin:.1em 0 .05em;
+  font-size:clamp(120px,32vw,300px);
+  background:linear-gradient(180deg,#fff2c2,var(--gold) 55%,#ff9f43);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.35));
+}
+.intro-num.pop{animation:pop .9s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(.85)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.intro-title{
+  font-family:var(--serif);font-size:clamp(28px,6vw,54px);margin:0 0 .4em;opacity:0;transform:translateY(16px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.intro-title.show{opacity:1;transform:none}
+.intro-btn{
+  opacity:0;transform:translateY(16px);pointer-events:none;
+  background:var(--gold);color:#2a1b00;border:0;border-radius:999px;padding:14px 30px;font-size:18px;font-weight:700;
+  box-shadow:0 10px 30px rgba(255,200,87,.35);transition:opacity .8s ease .3s,transform .8s ease .3s,box-shadow .2s;
+}
+.intro-btn.show{opacity:1;transform:none;pointer-events:auto}
+.intro-btn:hover{box-shadow:0 14px 38px rgba(255,200,87,.55)}
+#skipBtn{
+  position:absolute;top:16px;right:16px;z-index:3;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;padding:8px 16px;font-size:14px;
+}
+#confetti{position:fixed;inset:0;z-index:1050;pointer-events:none}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;height:var(--tb);display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 16px;background:rgba(15,18,38,.78);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07);
+}
+.brand{font-family:var(--serif);font-size:19px;white-space:nowrap}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
+  padding:9px 14px;border-radius:999px;font-size:14px;transition:background .2s,transform .15s;
+}
+.btn:hover{background:rgba(255,255,255,.14)}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#2a1b00;font-weight:700}
+.btn.primary:hover{background:#ffd47c}
+.btn.danger{border-color:rgba(255,107,129,.5);color:#ffb3bf}
+.btn[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#06302c;font-weight:700}
+@media(max-width:640px){.btn .lbl{display:none}.btn{padding:9px 12px}.brand{font-size:16px}}
+
+/* ---------- Hero ---------- */
+.hero{text-align:center;padding:64px 20px 28px;max-width:900px;margin:0 auto}
+.hero .kicker{letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-size:13px}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(40px,9vw,84px);line-height:1.05;margin:.2em 0 .15em;
+  background:linear-gradient(90deg,#fff,#ffe29a 40%,#ff9fb0);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);font-size:clamp(16px,2.4vw,20px);margin:.3em 0}
+.hero .count{display:inline-block;margin-top:10px;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.07);font-size:14px;color:var(--muted)}
+.scroll-cue{margin-top:26px;font-size:26px;animation:bob 1.8s ease-in-out infinite;opacity:.7}
+@keyframes bob{50%{transform:translateY(8px)}}
+
+/* ---------- Decade navigation ---------- */
+#decadeNav{
+  position:sticky;top:var(--tb);z-index:40;display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;overflow-x:auto;
+  padding:10px 16px;background:linear-gradient(var(--bg),rgba(15,18,38,0));scrollbar-width:none;
+}
+#decadeNav::-webkit-scrollbar{display:none}
+#decadeNav:empty{display:none}
+.chip{
+  flex:none;border:1px solid rgba(255,255,255,.18);background:rgba(23,27,58,.9);border-radius:999px;padding:6px 16px;font-size:14px;
+}
+.chip:hover{background:var(--violet);border-color:var(--violet)}
+
+/* ---------- Timeline ---------- */
+.timeline{list-style:none;margin:0 auto;padding:20px 16px 90px;max-width:1040px;position:relative}
+.timeline::before{
+  content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;transform:translateX(-50%);border-radius:3px;
+  background:linear-gradient(var(--gold),var(--coral) 50%,var(--teal));opacity:.65;
+}
+.decade{position:relative;z-index:2;text-align:center;margin:18px 0 28px;scroll-margin-top:calc(var(--tb) + 60px)}
+.decade span{
+  display:inline-block;font-family:var(--serif);font-size:26px;padding:6px 26px;border-radius:999px;
+  background:var(--bg2);border:2px solid var(--gold);color:var(--gold);box-shadow:0 6px 24px rgba(0,0,0,.35);
+}
+.decade.undated span{border-color:var(--muted);color:var(--muted);font-size:20px}
+.item{position:relative;width:50%;padding:0 40px 38px 0;opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+.item.in{opacity:1;transform:none}
+.item.right{margin-left:50%;padding:0 0 38px 40px}
+.dot{
+  position:absolute;top:26px;right:-10px;width:20px;height:20px;border-radius:50%;background:var(--gold);
+  border:4px solid var(--bg);box-shadow:0 0 0 3px rgba(255,200,87,.35);z-index:3;
+}
+.item.right .dot{right:auto;left:-10px}
+.item.center{width:100%;margin:0;padding:10px 0 0;display:flex;justify-content:center}
+.item.center .dot{display:none}
+
+.card{
+  background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.07);transition:transform .3s ease,box-shadow .3s ease;
+}
+.item.left .card{transform:rotate(-.7deg)}
+.item.right .card{transform:rotate(.7deg)}
+.card:hover{transform:translateY(-5px) rotate(0);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.imgwrap{display:block;width:100%;padding:0;border:0;background:#000;overflow:hidden;cursor:zoom-in}
+.imgwrap img{width:100%;height:auto;max-height:400px;object-fit:cover;transition:transform .5s ease}
+.card:hover .imgwrap img{transform:scale(1.05)}
+.imgwrap.missing{min-height:150px;display:flex;align-items:center;justify-content:center;padding:20px;background:#10132b;color:var(--muted);font-size:14px;text-align:center;cursor:default}
+.imgwrap.missing::after{content:"⏳ Foto wird gerade veröffentlicht – in ca. 1 Minute Seite neu laden"}
+.imgwrap.missing img{display:none}
+.card .body{padding:14px 18px 16px}
+.when{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.when time{font-family:var(--serif);font-size:20px;color:var(--gold)}
+.when .nodate{font-size:16px;color:var(--muted);font-style:italic}
+.age{font-size:13px;color:var(--muted)}
+.where{margin-top:4px;color:#d7daf0;font-size:15px}
+.desc{margin:10px 0 0;color:#e8e6df;white-space:pre-wrap;overflow-wrap:anywhere}
+.card .tools{display:none;gap:8px;margin-top:12px}
+body.editing .card .tools{display:flex}
+.card .tools .btn{padding:6px 12px;font-size:13px}
+.card .fill{margin-top:12px}
+.card .fill .btn{padding:6px 12px;font-size:13px;border-style:dashed}
+.special{text-align:center;padding:26px 24px 24px;background:linear-gradient(145deg,#27255a,#3b1f58)}
+.special .emoji{font-size:48px;line-height:1}
+.special h2{font-family:var(--serif);margin:.3em 0 .1em;font-size:26px}
+.special.final{max-width:520px;width:100%;border:2px solid var(--gold);background:linear-gradient(145deg,#2c2563,#5a2358)}
+.special .btn{margin-top:14px}
+.empty{text-align:center;padding:30px 24px;border:2px dashed rgba(255,255,255,.25);background:rgba(255,255,255,.03);border-radius:18px;color:var(--muted)}
+.empty strong{color:var(--text)}
+
+@media(max-width:760px){
+  .timeline::before{left:20px}
+  .item,.item.right{width:100%;margin-left:0;padding:0 0 30px 52px}
+  .dot,.item.right .dot{left:11px;right:auto}
+  .item.center{padding-left:52px;justify-content:flex-start}
+  .decade{text-align:left;padding-left:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .item{opacity:1;transform:none}
+}
+
+/* ---------- Dialogs ---------- */
+dialog{
+  border:0;border-radius:22px;background:var(--bg2);color:var(--text);padding:0;width:min(560px,94vw);max-height:92vh;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+dialog::backdrop{background:rgba(5,6,18,.75);backdrop-filter:blur(4px)}
+.dlg{padding:22px 22px 20px}
+.dlg h2{font-family:var(--serif);margin:0 0 14px;font-size:24px}
+.field{margin:0 0 14px}
+.field label,.field .lab{display:block;font-size:14px;color:var(--muted);margin-bottom:5px}
+.field label .req{color:var(--coral)}
+input[type=text],input[type=password],textarea,select{
+  width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:var(--text);font:inherit;
+}
+select{background:#232850;color-scheme:dark;padding:11px 10px}
+textarea{min-height:84px;resize:vertical}
+.dategrid{display:grid;grid-template-columns:1fr 1.8fr 1.3fr;gap:8px}
+.dategrid label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
+.dategrid select,.dategrid input{height:46px}
+.dategrid input{text-align:center}
+.drop{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:150px;padding:14px;text-align:center;
+  border:2px dashed rgba(255,255,255,.3);border-radius:16px;background:rgba(255,255,255,.04);cursor:pointer;overflow:hidden;
+}
+.drop.over{border-color:var(--gold);background:rgba(255,200,87,.1)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop img{max-height:240px;border-radius:10px;object-fit:contain}
+.drop .hint{color:var(--muted);font-size:14px}
+.hintline{margin:0 0 8px;color:var(--muted);font-size:13px}
+.err{color:#ffb3bf;font-size:14px;min-height:1.2em;margin:0 0 8px}
+.actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.sect{border-top:1px solid rgba(255,255,255,.1);margin-top:16px;padding-top:14px}
+.sect h3{margin:0 0 8px;font-size:16px}
+.sect p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+.gh-grid{display:grid;grid-template-columns:1fr 1fr .7fr;gap:8px;margin-bottom:12px}
+.gh-grid label,.sect .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
+details.help{margin:0 0 12px;font-size:14px;color:var(--muted)}
+details.help summary{cursor:pointer;color:var(--gold)}
+details.help ol{margin:8px 0 0;padding-left:20px}
+details.help li{margin-bottom:4px}
+
+#lightbox{width:min(1000px,96vw);background:#07091a}
+#lightbox .stage{position:relative;display:flex;align-items:center;justify-content:center;background:#000;min-height:200px}
+#lightbox .stage img{max-height:72vh;width:auto;margin:0 auto;object-fit:contain}
+#lightbox .cap{padding:14px 20px 18px}
+#lightbox .cap .t{font-family:var(--serif);font-size:20px;color:var(--gold)}
+#lightbox .cap p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.lbtn{
+  position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;
+}
+.lbtn:hover{background:rgba(0,0,0,.8)}
+.lbtn.prev{left:10px}.lbtn.next{right:10px}
+.lclose{position:absolute;top:10px;right:10px;z-index:5;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:20px}
+
+#toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;z-index:2000;background:#fff;color:#14172b;
+  padding:11px 20px;border-radius:999px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:all .35s ease;max-width:92vw;text-align:center;pointer-events:none;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+</style>
+</head>
+<body class="noscroll">
+
+<!-- ====== Geburtstags-Intro ====== -->
+<div id="intro" role="dialog" aria-label="Geburtstagsanimation">
+  <div id="balloons" aria-hidden="true"></div>
+  <button id="skipBtn" type="button">Überspringen ✕</button>
+  <div class="intro-content">
+    <div class="intro-sub">Herzlichen Glückwunsch zum</div>
+    <div class="intro-num" id="introNum" aria-label="60">0</div>
+    <h1 class="intro-title" id="introTitle">Alles Gute, Peter!</h1>
+    <button class="intro-btn" id="enterBtn" type="button">Zeitreise starten →</button>
+  </div>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- ====== Kopfleiste ====== -->
+<header class="topbar">
+  <div class="brand">🎂 <span id="brandName">Peter</span> wird 60</div>
+  <div class="tools">
+    <button class="btn" id="partyBtn" type="button" title="Feier-Animation nochmal abspielen">🎉 <span class="lbl">Animation</span></button>
+    <button class="btn primary" id="addBtn" type="button">＋ <span class="lbl">Foto hinzufügen</span></button>
+    <button class="btn" id="editBtn" type="button" aria-pressed="false" title="Einträge bearbeiten oder löschen">✏️ <span class="lbl">Bearbeiten</span></button>
+    <button class="btn" id="settingsBtn" type="button" title="Einstellungen & Datensicherung">⚙️ <span class="lbl">Einstellungen</span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="kicker">Eine Zeitreise durch sechs Jahrzehnte</div>
+  <h1 id="heroName">Peter Röper</h1>
+  <p>60 Jahre · unzählige Erinnerungen</p>
+  <span class="count" id="heroCount"></span>
+  <div class="scroll-cue" aria-hidden="true">↓</div>
+</section>
+
+<nav id="decadeNav" aria-label="Zu Jahrzehnt springen"></nav>
+<ol class="timeline" id="timeline"></ol>
+<footer>Mit Liebe gemacht 💛</footer>
+
+<!-- ====== Foto hinzufügen / bearbeiten ====== -->
+<dialog id="formDlg">
+  <form class="dlg" id="entryForm" method="dialog" novalidate>
+    <h2 id="formTitle">Neues Foto hinzufügen</h2>
+    <div class="field">
+      <span class="lab">Foto <span style="color:var(--coral)">*</span></span>
+      <label class="drop" id="drop">
+        <img id="preview" alt="Vorschau" hidden>
+        <span class="hint" id="dropHint">📷 Foto hierher ziehen oder tippen zum Auswählen</span>
+        <input type="file" id="fileInput" accept="image/*">
+      </label>
+    </div>
+    <div class="field">
+      <span class="lab" id="fDateLab">Datum (optional)</span>
+      <div class="dategrid" role="group" aria-labelledby="fDateLab">
+        <div><label for="fDay">Tag</label><select id="fDay"></select></div>
+        <div><label for="fMonth">Monat</label><select id="fMonth"></select></div>
+        <div><label for="fYear">Jahr</label><input type="text" id="fYear" inputmode="numeric" maxlength="4" placeholder="JJJJ" autocomplete="off"></div>
+      </div>
+      <p class="hintline" style="margin:6px 0 0">Wenn du nur das Jahr (oder Monat &amp; Jahr) kennst, lass Tag bzw. Monat einfach leer.</p>
+    </div>
+    <div class="field">
+      <label for="fPlace">Ort (optional)</label>
+      <input type="text" id="fPlace" maxlength="120" placeholder="z. B. Düsseldorf, Gardasee, Zuhause" list="placeList" autocomplete="off">
+      <datalist id="placeList"></datalist>
+    </div>
+    <div class="field">
+      <label for="fDesc">Beschreibung (optional)</label>
+      <textarea id="fDesc" maxlength="600" placeholder="Was ist da passiert? Wer war dabei?"></textarea>
+    </div>
+    <p class="hintline">Datum und Ort kannst du jederzeit nachtragen oder ändern (✏️ am Eintrag).</p>
+    <p class="hintline" id="ghNote" hidden>ℹ️ Ohne GitHub-Verbindung (⚙️ Einstellungen) bleibt das Foto nur auf diesem Gerät gespeichert.</p>
+    <p class="err" id="formErr" role="alert"></p>
+    <div class="actions">
+      <button type="button" class="btn" id="formCancel">Abbrechen</button>
+      <button type="submit" class="btn primary" id="formSave">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ====== Einstellungen ====== -->
+<dialog id="setDlg">
+  <form class="dlg" id="setForm" method="dialog" novalidate>
+    <h2>Einstellungen</h2>
+    <div class="field">
+      <label for="sName">Name</label>
+      <input type="text" id="sName" maxlength="80">
+    </div>
+    <div class="field">
+      <span class="lab" id="sDateLab">Geburtsdatum (für Altersangaben &amp; Geburts-Eintrag)</span>
+      <div class="dategrid" role="group" aria-labelledby="sDateLab">
+        <div><label for="sDay">Tag</label><select id="sDay"></select></div>
+        <div><label for="sMonth">Monat</label><select id="sMonth"></select></div>
+        <div><label for="sYear">Jahr</label><input type="text" id="sYear" inputmode="numeric" maxlength="4" placeholder="JJJJ" autocomplete="off"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="sBirthplace">Geburtsort (optional)</label>
+      <input type="text" id="sBirthplace" maxlength="120">
+    </div>
+    <p class="err" id="setErr" role="alert"></p>
+    <div class="actions">
+      <button type="button" class="btn" id="setCancel">Schließen</button>
+      <button type="submit" class="btn primary">Speichern</button>
+    </div>
+
+    <div class="sect">
+      <h3>🐙 GitHub-Speicher</h3>
+      <p id="ghStatus"></p>
+      <details class="help">
+        <summary>So verbindest du die Seite mit deinem Repository</summary>
+        <ol>
+          <li>Auf GitHub: <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>.</li>
+          <li>Bei <b>Repository access</b> nur dieses eine Repository auswählen.</li>
+          <li>Bei <b>Permissions → Repository permissions</b> den Eintrag <b>Contents</b> auf <b>Read and write</b> setzen.</li>
+          <li>Token erzeugen, kopieren und unten einfügen. Er wird nur in diesem Browser gespeichert – nie in der Seite oder im Repository.</li>
+        </ol>
+      </details>
+      <div class="gh-grid">
+        <div><label for="ghOwner">GitHub-Benutzer</label><input type="text" id="ghOwner" autocomplete="off" autocapitalize="off"></div>
+        <div><label for="ghRepo">Repository</label><input type="text" id="ghRepo" autocomplete="off" autocapitalize="off"></div>
+        <div><label for="ghBranch">Branch</label><input type="text" id="ghBranch" placeholder="main" autocomplete="off" autocapitalize="off"></div>
+      </div>
+      <div class="field">
+        <label for="ghToken">Zugriffstoken</label>
+        <input type="password" id="ghToken" autocomplete="off" placeholder="github_pat_…">
+      </div>
+      <p class="err" id="ghErr" role="alert"></p>
+      <div class="btnrow">
+        <button type="button" class="btn primary" id="ghConnect">🔗 Verbinden &amp; testen</button>
+        <button type="button" class="btn" id="ghDisconnect" hidden>Trennen</button>
+        <button type="button" class="btn" id="ghMigrate" hidden></button>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h3>💾 Sichern &amp; Teilen</h3>
+      <p>„Als fertige Seite speichern“ erzeugt eine HTML-Datei, in der alle Fotos bereits enthalten sind. Die Sicherung (.json) kannst du später wieder einlesen.</p>
+      <div class="btnrow">
+        <button type="button" class="btn" id="savePageBtn">🌐 Als fertige Seite speichern</button>
+        <button type="button" class="btn" id="exportBtn">⬇️ Sicherung (.json)</button>
+        <label class="btn" for="importInput" style="cursor:pointer">⬆️ Sicherung laden</label>
+        <input type="file" id="importInput" accept="application/json,.json" class="sr-only">
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- ====== Lightbox ====== -->
+<dialog id="lightbox" aria-label="Foto-Ansicht">
+  <button class="lclose" id="lClose" type="button" aria-label="Schließen">✕</button>
+  <div class="stage">
+    <button class="lbtn prev" id="lPrev" type="button" aria-label="Vorheriges Foto">‹</button>
+    <img id="lImg" alt="">
+    <button class="lbtn next" id="lNext" type="button" aria-label="Nächstes Foto">›</button>
+  </div>
+  <div class="cap">
+    <div class="t" id="lTitle"></div>
+    <p id="lDesc"></p>
+    <div style="margin-top:12px"><button type="button" class="btn" id="lEdit">✏️ Datum / Ort / Beschreibung ändern</button></div>
+  </div>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- Eingebettete Daten (wird beim Speichern als fertige Seite befüllt) -->
+<script id="seed" type="application/json">{"settings":{},"entries":[]}</script>
+
+<script>
+(function(){
+'use strict';
+
+/* Originalquelltext merken (vor jeglichem Rendern) – dient dem Export als fertige Seite */
+const SOURCE_HTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+const $ = (s, r=document) => r.querySelector(s);
+const el = (tag, props={}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(props)) {
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  kids.flat().forEach(c => { if (c != null) e.append(c.nodeType ? c : document.createTextNode(c)); });
+  return e;
+};
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const uid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+const isHttp = /^https?:$/.test(location.protocol);
+
+/* ---------- Datum-Helfer (JJJJ-MM-TT, JJJJ-MM oder JJJJ) ---------- */
+const dFmt = new Intl.DateTimeFormat('de-DE', {day:'numeric', month:'long', year:'numeric'});
+const mFmt = new Intl.DateTimeFormat('de-DE', {month:'long', year:'numeric'});
+const monthName = i => new Intl.DateTimeFormat('de-DE', {month:'long'}).format(new Date(2000, i, 1));
+const parseD = s => { const [y, m=1, d=1] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const fmtDate = s => { const n = s.split('-').length; return n === 3 ? dFmt.format(parseD(s)) : n === 2 ? mFmt.format(parseD(s)) : s; };
+const cmpStr = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+const todayStr = () => { const t = new Date(); return t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0'); };
+function ageAt(birth, date){
+  const b = parseD(birth), d = parseD(date);
+  let a = d.getFullYear() - b.getFullYear();
+  if (d.getMonth() < b.getMonth() || (d.getMonth() === b.getMonth() && d.getDate() < b.getDate())) a--;
+  return a;
+}
+function ageLabel(birth, date){
+  if (!birth || !date) return '';
+  const a = ageAt(birth, date);
+  if (a < 0) return '';
+  if (date.length < 10) return a === 0 ? 'im ersten Lebensjahr' : 'ca. ' + a + (a === 1 ? ' Jahr' : ' Jahre');
+  if (a === 0) return 'im ersten Lebensjahr';
+  return a === 1 ? 'mit 1 Jahr' : 'mit ' + a + ' Jahren';
+}
+
+/* ---------- Speicher im Browser (IndexedDB mit Fallback) ---------- */
+const DB = {
+  db: null, ok: false, tried: false,
+  mem: { entries: new Map(), meta: new Map() },
+  key: { entries: 'id', meta: 'key' },
+  open(){
+    if (this.tried) return Promise.resolve(this.ok);
+    this.tried = true;
+    return new Promise(res => {
+      let done = false;
+      const fin = v => { if (!done) { done = true; res(v); } };
+      setTimeout(() => fin(false), 3000);
+      try {
+        const r = indexedDB.open('peter60-zeitreise', 1);
+        r.onupgradeneeded = () => {
+          r.result.createObjectStore('entries', {keyPath:'id'});
+          r.result.createObjectStore('meta', {keyPath:'key'});
+        };
+        r.onsuccess = () => { if (done) { r.result.close(); return; } this.db = r.result; this.ok = true; fin(true); };
+        r.onerror = () => fin(false);
+        r.onblocked = () => fin(false);
+      } catch(e){ fin(false); }
+    });
+  },
+  _tx(store, mode, fn){
+    return new Promise((res, rej) => {
+      const t = this.db.transaction(store, mode);
+      const req = fn(t.objectStore(store));
+      t.oncomplete = () => res(req ? req.result : undefined);
+      t.onerror = () => rej(t.error);
+      t.onabort = () => rej(t.error || new Error('abgebrochen'));
+    });
+  },
+  all(store){ return this.ok ? this._tx(store, 'readonly', s => s.getAll()) : Promise.resolve([...this.mem[store].values()]); },
+  put(store, val){
+    if (!this.ok) { this.mem[store].set(val[this.key[store]], val); return Promise.resolve(); }
+    return this._tx(store, 'readwrite', s => s.put(val));
+  },
+  del(store, k){
+    if (!this.ok) { this.mem[store].delete(k); return Promise.resolve(); }
+    return this._tx(store, 'readwrite', s => s.delete(k));
+  }
+};
+
+/* ---------- GitHub-Anbindung ---------- */
+const GH_KEY = 'p60-github';
+const GH_JSON = 'data/entries.json';
+function ghGuess(){
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/i);
+  if (!m) return {owner:'', repo:''};
+  const seg = location.pathname.split('/').filter(Boolean)[0] || '';
+  return {owner:m[1], repo: seg && !/\.html?$/i.test(seg) ? seg : m[1] + '.github.io'};
+}
+function ghCfg(){
+  try {
+    const c = JSON.parse(localStorage.getItem(GH_KEY) || 'null');
+    return c && c.owner && c.repo && c.token ? c : null;
+  } catch(e){ return null; }
+}
+const ghConnected = () => !!ghCfg();
+const encPath = p => p.split('/').map(encodeURIComponent).join('/');
+const b64enc = s => { let bin = ''; new TextEncoder().encode(s).forEach(x => bin += String.fromCharCode(x)); return btoa(bin); };
+const b64dec = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, '')), c => c.charCodeAt(0)));
+
+async function ghApi(method, sub, body, raw, cfg){
+  const c = cfg || ghCfg();
+  if (!c) throw new Error('Nicht mit GitHub verbunden.');
+  const url = 'https://api.github.com/repos/' + encodeURIComponent(c.owner) + '/' + encodeURIComponent(c.repo) + sub
+    + (method === 'GET' && sub.startsWith('/contents/') ? '?ref=' + encodeURIComponent(c.branch || 'main') : '');
+  const headers = { Authorization:'Bearer ' + c.token, Accept: raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json' };
+  if (body) headers['Content-Type'] = 'application/json';
+  try { return await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined, cache:'no-store' }); }
+  catch(e){ throw new Error('Keine Verbindung zu GitHub (Internet prüfen).'); }
+}
+const ghC = (method, path, body, raw) => ghApi(method, '/contents/' + encPath(path), body, raw);
+function ghError(res){
+  const m = { 401:'Token ungültig oder abgelaufen.',
+    403:'Zugriff verweigert – der Token braucht für dieses Repository „Contents: Read and write“.',
+    404:'Repository oder Branch nicht gefunden (oder der Token hat darauf keinen Zugriff).',
+    409:'Konflikt beim Speichern – bitte nochmal versuchen.', 422:'GitHub hat die Anfrage abgelehnt.' };
+  return new Error(m[res.status] || ('GitHub-Fehler ' + res.status));
+}
+let ghQ = Promise.resolve();
+const ghEnqueue = fn => { const p = ghQ.then(fn); ghQ = p.catch(() => {}); return p; };
+const photoPath = e => 'fotos/' + String(e.id).replace(/[^\w-]/g, '_') + '.jpg';
+
+async function ghUpdateJson(mutate){
+  const branch = (ghCfg().branch || 'main');
+  for (let i = 0; i < 4; i++) {
+    let sha, data = { settings:{}, entries:[] };
+    const g = await ghC('GET', GH_JSON);
+    if (g.ok) {
+      const j = await g.json(); sha = j.sha;
+      try { data = JSON.parse(b64dec(j.content)); } catch(e){}
+    } else if (g.status !== 404) throw ghError(g);
+    if (!data || typeof data !== 'object') data = {};
+    if (!Array.isArray(data.entries)) data.entries = [];
+    if (!data.settings || typeof data.settings !== 'object') data.settings = {};
+    mutate(data);
+    const body = { message:'Zeitreise aktualisiert', content:b64enc(JSON.stringify(data, null, 1)), branch };
+    if (sha) body.sha = sha;
+    const p = await ghC('PUT', GH_JSON, body);
+    if (p.ok) return data;
+    if (p.status !== 409 && p.status !== 422) throw ghError(p);
+  }
+  throw new Error('Konflikt beim Speichern – bitte nochmal versuchen.');
+}
+async function ghPutFile(path, dataUrl){
+  const body = { message:'Foto hinzufügen', content:dataUrl.split(',')[1], branch:(ghCfg().branch || 'main') };
+  let r = await ghC('PUT', path, body);
+  if (r.status === 422 || r.status === 409) {
+    const g = await ghC('GET', path);
+    if (g.ok) { body.sha = (await g.json()).sha; r = await ghC('PUT', path, body); }
+  }
+  if (!r.ok) throw ghError(r);
+}
+async function ghDeleteFile(path){
+  const g = await ghC('GET', path);
+  if (g.status === 404) return;
+  if (!g.ok) throw ghError(g);
+  const r = await ghC('DELETE', path, { message:'Foto entfernen', sha:(await g.json()).sha, branch:(ghCfg().branch || 'main') });
+  if (!r.ok && r.status !== 404) throw ghError(r);
+}
+const ghSaveEntry = entry => ghEnqueue(async () => {
+  const e = { id:entry.id, photo:entry.photo, date:entry.date || '', place:entry.place || '', desc:entry.desc || '', created:entry.created || Date.now() };
+  if (/^data:image\//.test(e.photo)) { const path = photoPath(e); await ghPutFile(path, e.photo); e.photo = path; }
+  await ghUpdateJson(d => { const i = d.entries.findIndex(x => x.id === e.id); if (i >= 0) d.entries[i] = e; else d.entries.push(e); });
+  return e;
+});
+const ghDeleteEntry = e => ghEnqueue(async () => {
+  await ghUpdateJson(d => { d.entries = d.entries.filter(x => x.id !== e.id); });
+  if (/^fotos\//.test(e.photo)) await ghDeleteFile(e.photo);
+});
+const ghSaveSettings = s => ghEnqueue(() => ghUpdateJson(d => { d.settings = s; }));
+
+async function loadRepoData(){
+  try {
+    let res;
+    if (ghConnected()) res = await ghC('GET', GH_JSON, null, true);
+    else if (isHttp) res = await fetch('data/entries.json?t=' + Date.now(), { cache:'no-store' });
+    else return null;
+    if (!res.ok) return null;
+    const o = await res.json();
+    return { settings:(o && o.settings) || {}, entries:Array.isArray(o && o.entries) ? o.entries : [] };
+  } catch(e){ return null; }
+}
+
+/* ---------- Zustand ---------- */
+const DEFAULTS = { name:'Peter Röper', birth:'', birthplace:'' };
+const state = { settings:{...DEFAULTS}, entries:[], deleted:new Set(), seedIds:new Set(), repoIds:new Set() };
+
+function readSeed(){
+  try {
+    const o = JSON.parse(($('#seed').textContent || '').trim() || '{}');
+    return { settings:o.settings || {}, entries:Array.isArray(o.entries) ? o.entries : [] };
+  } catch(e){ return { settings:{}, entries:[] }; }
+}
+const PHOTO_RE = /^(data:image\/|fotos\/[\w\-.%]+\.(jpe?g|png|webp|gif)$)/i;
+const validEntry = e => {
+  if (!(e && typeof e.id === 'string' && typeof e.photo === 'string' && PHOTO_RE.test(e.photo))) return false;
+  if (e.date == null) e.date = '';
+  if (e.place == null) e.place = '';
+  return typeof e.date === 'string' && (e.date === '' || /^\d{4}(-\d{2}(-\d{2})?)?$/.test(e.date)) && typeof e.place === 'string';
+};
+const plain = e => ({ id:e.id, photo:e.photo, date:e.date, place:e.place, desc:e.desc || '', created:e.created || 0 });
+const photoSrc = e => e.view || e.photo;
+
+async function loadAll(){
+  const seed = readSeed();
+  await DB.open();
+  const [dbEntries, meta, repo] = await Promise.all([DB.all('entries'), DB.all('meta'), loadRepoData()]);
+  const m = Object.fromEntries(meta.map(x => [x.key, x.value]));
+  state.deleted = new Set(m.deleted || []);
+  state.seedIds = new Set(seed.entries.map(e => e.id));
+  state.repoIds = new Set(repo ? repo.entries.map(e => e.id) : []);
+  const map = new Map();
+  seed.entries.filter(validEntry).forEach(e => { if (!state.deleted.has(e.id)) map.set(e.id, e); });
+  if (repo) repo.entries.filter(validEntry).forEach(e => { if (!state.deleted.has(e.id)) map.set(e.id, e); });
+  dbEntries.filter(validEntry).forEach(e => map.set(e.id, e));
+  state.entries = [...map.values()];
+  state.settings = { ...DEFAULTS, ...seed.settings, ...(m.settings || {}), ...(repo ? repo.settings : {}) };
+}
+const sorted = () => [...state.entries].sort((a,b) => {
+  if (!a.date !== !b.date) return a.date ? -1 : 1;
+  return cmpStr(a.date || '', b.date || '') || (a.created||0) - (b.created||0);
+});
+const altText = e => 'Foto' + (e.place ? ' von ' + e.place : '') + (e.date ? ', ' + fmtDate(e.date) : '');
+const firstName = () => (state.settings.name || 'Peter').trim().split(/\s+/)[0] || 'Peter';
+
+/* Foto lädt nicht (z. B. neu hochgeladen, Seite noch nicht neu veröffentlicht) */
+function imgFallback(img){
+  const src = img.getAttribute('src') || '';
+  const c = ghCfg(), g = ghGuess();
+  const owner = c ? c.owner : g.owner, repo = c ? c.repo : g.repo, br = (c && c.branch) || 'main';
+  if (!img.dataset.tried && owner && repo && /^fotos\//.test(src)) {
+    img.dataset.tried = '1';
+    img.src = 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/' + br + '/' + src;
+    return;
+  }
+  const w = img.closest('.imgwrap'); if (w) w.classList.add('missing');
+}
+
+/* ---------- Datumsfelder (Tag / Monat / Jahr getrennt) ---------- */
+function initDateFields(px){
+  const d = $('#' + px + 'Day'), m = $('#' + px + 'Month');
+  d.replaceChildren(el('option', {value:'', text:'–'}));
+  for (let i = 1; i <= 31; i++) d.append(el('option', {value:String(i), text:String(i)}));
+  m.replaceChildren(el('option', {value:'', text:'–'}));
+  for (let i = 0; i < 12; i++) m.append(el('option', {value:String(i+1), text:monthName(i)}));
+}
+function setDateFields(px, val){
+  const [y='', m='', d=''] = (val || '').split('-');
+  $('#' + px + 'Year').value = y;
+  $('#' + px + 'Month').value = m ? String(+m) : '';
+  $('#' + px + 'Day').value = d ? String(+d) : '';
+}
+/* liefert {value} ('' oder JJJJ / JJJJ-MM / JJJJ-MM-TT) oder {error} */
+function readDateFields(px, requireFull){
+  const d = $('#' + px + 'Day').value, m = $('#' + px + 'Month').value, y = $('#' + px + 'Year').value.trim();
+  if (!d && !m && !y) return {value:''};
+  if (!y) return {error:'Bitte auch das Jahr angeben.'};
+  if (!/^\d{4}$/.test(y) || +y < 1900) return {error:'Das Jahr bitte vierstellig eingeben (ab 1900), z. B. 1985.'};
+  if (d && !m) return {error:'Bitte auch den Monat angeben.'};
+  if (requireFull && (!d || !m)) return {error:'Bitte Tag, Monat und Jahr angeben.'};
+  const mm = m ? String(m).padStart(2,'0') : '', dd = d ? String(d).padStart(2,'0') : '';
+  const value = y + (mm ? '-' + mm : '') + (dd ? '-' + dd : '');
+  if (dd) {
+    const t = new Date(+y, +m - 1, +d);
+    if (t.getFullYear() !== +y || t.getMonth() !== +m - 1 || t.getDate() !== +d) return {error:'Dieses Datum gibt es nicht (z. B. 31. Februar).'};
+  }
+  if (value > todayStr().slice(0, value.length)) return {error:'Das Datum liegt in der Zukunft.'};
+  return {value};
+}
+initDateFields('f'); initDateFields('s');
+
+/* ---------- Toast ---------- */
+let toastT;
+function toast(msg, ms=3400){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* ---------- Rendering ---------- */
+let io = null;
+function renderHero(){
+  const s = state.settings, n = state.entries.length;
+  $('#heroName').textContent = s.name || 'Peter Röper';
+  $('#brandName').textContent = firstName();
+  $('#introTitle').textContent = 'Alles Gute, ' + firstName() + '!';
+  document.title = firstName() + ' wird 60 – Eine Zeitreise';
+  $('#heroCount').textContent = n === 0 ? 'Noch keine Fotos' : n + (n === 1 ? ' Erinnerung' : ' Erinnerungen');
+}
+
+function photoCard(e){
+  const lbl = ageLabel(state.settings.birth, e.date);
+  const incomplete = !e.date || !e.place;
+  const missing = !e.date && !e.place ? 'Datum & Ort ergänzen' : (!e.date ? 'Datum ergänzen' : 'Ort ergänzen');
+  return el('article', {class:'card'},
+    el('button', {class:'imgwrap', type:'button', 'aria-label':'Foto vergrößern', onclick:() => openLightbox(e.id)},
+      el('img', {src:photoSrc(e), alt:altText(e), loading:'lazy', onerror:ev => imgFallback(ev.target)})),
+    el('div', {class:'body'},
+      el('div', {class:'when'},
+        e.date ? el('time', {datetime:e.date, text:fmtDate(e.date)}) : el('span', {class:'nodate', text:'Datum unbekannt'}),
+        lbl ? el('span', {class:'age', text:lbl}) : null),
+      e.place ? el('div', {class:'where', text:'📍 ' + e.place}) : null,
+      e.desc ? el('p', {class:'desc', text:e.desc}) : null,
+      incomplete ? el('div', {class:'fill'}, el('button', {class:'btn', type:'button', onclick:() => openForm(e)}, '＋ ' + missing)) : null,
+      el('div', {class:'tools'},
+        el('button', {class:'btn', type:'button', onclick:() => openForm(e)}, '✏️ Bearbeiten'),
+        el('button', {class:'btn danger', type:'button', onclick:() => removeEntry(e.id)}, '🗑 Löschen'))));
+}
+
+function render(){
+  renderHero();
+  const tl = $('#timeline');
+  tl.replaceChildren();
+  const all = sorted();
+  const list = all.filter(e => e.date), undated = all.filter(e => !e.date);
+  const frag = document.createDocumentFragment();
+  const s = state.settings;
+  let side = 0, lastDec = null;
+  const decs = [];
+
+  const decade = year => {
+    const d = Math.floor(year/10)*10;
+    if (d !== lastDec) {
+      lastDec = d; decs.push(d); side = 0;
+      frag.append(el('li', {class:'decade', id:'dec-' + d}, el('span', {text:d + 'er'})));
+    }
+  };
+  const addItem = content => {
+    const li = el('li', {class:'item ' + (side % 2 ? 'right' : 'left')}, el('span', {class:'dot'}), content);
+    side++; frag.append(li);
+  };
+
+  if (s.birth) {
+    decade(parseD(s.birth).getFullYear());
+    addItem(el('article', {class:'card special'},
+      el('div', {class:'emoji', text:'👶'}),
+      el('h2', {text:'Geboren'}),
+      el('div', {class:'when', style:'justify-content:center'}, el('time', {datetime:s.birth, text:fmtDate(s.birth)})),
+      s.birthplace ? el('div', {class:'where', text:'📍 ' + s.birthplace}) : null));
+  }
+
+  if (!all.length) {
+    side = 0;
+    frag.append(el('li', {class:'item center'},
+      el('div', {class:'empty'},
+        el('p', {}, el('strong', {text:'Die Zeitreise beginnt hier.'})),
+        el('p', {text:'Tippe oben auf „Foto hinzufügen“ und lade das erste Bild hoch. Das Geburtsdatum kannst du in den Einstellungen ⚙️ eintragen.'}))));
+  }
+
+  list.forEach(e => { decade(parseD(e.date).getFullYear()); addItem(photoCard(e)); });
+
+  if (undated.length) {
+    side = 0;
+    frag.append(el('li', {class:'decade undated', id:'dec-undated'}, el('span', {text:'Ohne Datum'})));
+    undated.forEach(e => addItem(photoCard(e)));
+  }
+
+  /* Abschluss: 60. Geburtstag */
+  let finalDate = '';
+  if (s.birth) {
+    const b = parseD(s.birth);
+    finalDate = fmtDate((b.getFullYear() + 60) + '-' + String(b.getMonth()+1).padStart(2,'0') + '-' + String(b.getDate()).padStart(2,'0'));
+  }
+  frag.append(el('li', {class:'item center'},
+    el('article', {class:'card special final'},
+      el('div', {class:'emoji', text:'🎂'}),
+      el('h2', {text:'60. Geburtstag'}),
+      finalDate ? el('div', {class:'when', style:'justify-content:center'}, el('time', {text:finalDate})) : null,
+      el('p', {class:'age', text:'… und die Reise geht weiter!'}),
+      el('button', {class:'btn primary', type:'button', onclick:() => partyBurst()}, '🎉 Nochmal feiern'))));
+
+  tl.append(frag);
+
+  /* Navigation */
+  const nav = $('#decadeNav'); nav.replaceChildren();
+  const targets = decs.map(d => [d + 'er', 'dec-' + d]);
+  if (undated.length) targets.push(['Ohne Datum', 'dec-undated']);
+  if (targets.length > 1) targets.forEach(([label, id]) => nav.append(
+    el('button', {class:'chip', type:'button', onclick:() => { const t = document.getElementById(id); if (t) t.scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth', block:'start'}); }}, label)));
+
+  /* Einblend-Effekt beim Scrollen */
+  if (io) io.disconnect();
+  const items = tl.querySelectorAll('.item');
+  if ('IntersectionObserver' in window) {
+    io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), {threshold:.08});
+    items.forEach(i => io.observe(i));
+  } else items.forEach(i => i.classList.add('in'));
+}
+
+/* ---------- Foto-Verarbeitung ---------- */
+function fileToDataURL(file, max=1600, q=.82){
+  return new Promise((res, rej) => {
+    if (!file || !(file.type || '').startsWith('image/')) return rej(new Error('Bitte eine Bilddatei auswählen.'));
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const w = img.naturalWidth, h = img.naturalHeight;
+      const sc = Math.min(1, max / Math.max(w, h));
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(w*sc)); c.height = Math.max(1, Math.round(h*sc));
+      const x = c.getContext('2d');
+      x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+      x.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg', q));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Dieses Bildformat kann der Browser nicht lesen (z. B. HEIC). Bitte als JPG oder PNG speichern.')); };
+    img.src = url;
+  });
+}
+
+/* ---------- Formular: hinzufügen / bearbeiten ---------- */
+const formDlg = $('#formDlg'), form = $('#entryForm');
+let editing = null, pendingPhoto = null, pendingView = null, loadingPhoto = false;
+
+function setErr(m){ $('#formErr').textContent = m || ''; }
+function updatePreview(){
+  const p = $('#preview'), src = pendingView || pendingPhoto;
+  if (src) { p.src = src; p.hidden = false; $('#dropHint').textContent = '🔄 Anderes Foto wählen'; }
+  else { p.removeAttribute('src'); p.hidden = true; $('#dropHint').textContent = '📷 Foto hierher ziehen oder tippen zum Auswählen'; }
+}
+function fillPlaces(){
+  const dl = $('#placeList'); dl.replaceChildren();
+  [...new Set(state.entries.map(e => e.place).filter(Boolean))].sort().forEach(p => dl.append(el('option', {value:p})));
+}
+function setBusy(b){
+  const s = $('#formSave'); s.disabled = b; s.textContent = b ? 'Speichert …' : 'Speichern';
+  $('#formCancel').disabled = b;
+}
+function openForm(entry){
+  editing = entry || null;
+  pendingPhoto = entry ? entry.photo : null;
+  pendingView = entry ? (entry.view || null) : null;
+  form.reset(); setErr(''); setBusy(false);
+  $('#formTitle').textContent = entry ? 'Eintrag bearbeiten' : 'Neues Foto hinzufügen';
+  setDateFields('f', entry ? entry.date : '');
+  if (entry) { $('#fPlace').value = entry.place; $('#fDesc').value = entry.desc || ''; }
+  $('#ghNote').hidden = !(isHttp && !ghConnected());
+  fillPlaces(); updatePreview();
+  formDlg.showModal();
+}
+$('#addBtn').addEventListener('click', () => openForm(null));
+$('#formCancel').addEventListener('click', () => formDlg.close());
+
+$('#fileInput').addEventListener('change', async ev => {
+  const f = ev.target.files && ev.target.files[0];
+  if (!f) return;
+  setErr(''); loadingPhoto = true; $('#dropHint').textContent = '⏳ Foto wird verarbeitet …';
+  try { pendingPhoto = await fileToDataURL(f); pendingView = null; }
+  catch(err){ setErr(err.message); }
+  loadingPhoto = false; updatePreview();
+  ev.target.value = '';
+});
+const drop = $('#drop');
+['dragenter','dragover'].forEach(t => drop.addEventListener(t, () => drop.classList.add('over')));
+['dragleave','drop'].forEach(t => drop.addEventListener(t, () => drop.classList.remove('over')));
+
+form.addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const place = $('#fPlace').value.trim(), desc = $('#fDesc').value.trim();
+  if (loadingPhoto) return setErr('Das Foto wird noch verarbeitet – einen Moment bitte.');
+  if (!pendingPhoto) return setErr('Bitte zuerst ein Foto auswählen.');
+  const dr = readDateFields('f', false);
+  if (dr.error) return setErr(dr.error);
+  const base = { id: editing ? editing.id : uid(), photo: pendingPhoto, date: dr.value, place, desc, created: editing ? (editing.created || Date.now()) : Date.now() };
+  const viewSrc = /^data:image\//.test(pendingPhoto) ? pendingPhoto : (pendingView || null);
+
+  let saved = null, remoteErr = '', persisted = true;
+  if (ghConnected()) {
+    setBusy(true);
+    try {
+      const r = await ghSaveEntry(base);
+      saved = { ...r, view:viewSrc || undefined };
+      state.repoIds.add(r.id);
+      try { await DB.del('entries', r.id); } catch(e){}
+    } catch(err){ remoteErr = err.message || 'Unbekannter Fehler'; }
+    setBusy(false);
+  }
+  if (!saved) {
+    saved = base;
+    try { await DB.put('entries', base); } catch(err){ persisted = false; }
+  }
+  const i = state.entries.findIndex(e => e.id === saved.id);
+  if (i >= 0) state.entries[i] = saved; else state.entries.push(saved);
+  formDlg.close();
+  render();
+  if (ghConnected() && !remoteErr) toast('Im Repository gespeichert ✔ (online in ca. 1 Minute sichtbar)', 4500);
+  else if (remoteErr) toast('Nicht ins Repository gespeichert: ' + remoteErr + ' – Foto bleibt lokal erhalten.', 6500);
+  else if (!persisted || !DB.ok) toast('Hinweis: Das Foto ist nur vorübergehend gespeichert – bitte ⚙️ → „Als fertige Seite speichern“ nutzen.', 6000);
+  else toast(editing ? 'Eintrag gespeichert ✔' : 'Foto hinzugefügt ✔');
+  const idx = sorted().findIndex(e => e.id === saved.id);
+  setTimeout(() => {
+    const cards = document.querySelectorAll('#timeline .item .card:not(.special)');
+    if (cards[idx]) { cards[idx].scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth', block:'center'}); cards[idx].closest('.item').classList.add('in'); }
+  }, 80);
+});
+
+async function removeEntry(id){
+  if (!confirm('Diesen Eintrag wirklich löschen?')) return;
+  const e = state.entries.find(x => x.id === id);
+  try {
+    let remote = false;
+    if (e && ghConnected() && state.repoIds.has(id)) {
+      toast('Wird im Repository gelöscht …', 6000);
+      await ghDeleteEntry(e); state.repoIds.delete(id); remote = true;
+    }
+    await DB.del('entries', id);
+    if (!remote && (state.seedIds.has(id) || state.repoIds.has(id))) {
+      state.deleted.add(id);
+      await DB.put('meta', {key:'deleted', value:[...state.deleted]});
+    }
+  } catch(err){ return toast('Löschen fehlgeschlagen' + (err && err.message ? ': ' + err.message : '.'), 5000); }
+  state.entries = state.entries.filter(x => x.id !== id);
+  render(); toast('Eintrag gelöscht');
+}
+
+/* ---------- Lightbox ---------- */
+const lb = $('#lightbox');
+let lbList = [], lbIdx = 0;
+function openLightbox(id){
+  lbList = sorted();
+  lbIdx = Math.max(0, lbList.findIndex(e => e.id === id));
+  showLb();
+  if (!lb.open) lb.showModal();
+}
+function showLb(){
+  const e = lbList[lbIdx]; if (!e) return;
+  const img = $('#lImg');
+  delete img.dataset.tried;
+  img.src = photoSrc(e);
+  img.alt = altText(e);
+  const lbl = ageLabel(state.settings.birth, e.date);
+  $('#lTitle').textContent = [e.date ? fmtDate(e.date) : 'Datum unbekannt', e.place, lbl].filter(Boolean).join(' · ');
+  $('#lDesc').textContent = e.desc || '';
+  $('#lDesc').hidden = !e.desc;
+  $('#lPrev').hidden = $('#lNext').hidden = lbList.length < 2;
+}
+$('#lImg').addEventListener('error', ev => imgFallback(ev.target));
+const lbStep = d => { lbIdx = (lbIdx + d + lbList.length) % lbList.length; showLb(); };
+$('#lPrev').addEventListener('click', () => lbStep(-1));
+$('#lNext').addEventListener('click', () => lbStep(1));
+$('#lClose').addEventListener('click', () => lb.close());
+$('#lEdit').addEventListener('click', () => { const e = lbList[lbIdx]; if (!e) return; lb.close(); openForm(e); });
+lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });
+document.addEventListener('keydown', ev => {
+  if (lb.open) {
+    if (ev.key === 'ArrowLeft') lbStep(-1);
+    if (ev.key === 'ArrowRight') lbStep(1);
+  }
+  if (ev.key === 'Escape' && !$('#intro').classList.contains('hide') && $('#intro').style.display !== 'none') endIntro();
+});
+
+/* ---------- Einstellungen, GitHub, Export, Import ---------- */
+const setDlg = $('#setDlg');
+const gh = { owner:$('#ghOwner'), repo:$('#ghRepo'), branch:$('#ghBranch'), token:$('#ghToken') };
+function ghRefreshUI(){
+  const c = ghCfg(), g = ghGuess();
+  const local = state.entries.filter(e => /^data:image\//.test(e.photo)).length;
+  $('#ghStatus').textContent = c
+    ? '✅ Verbunden mit ' + c.owner + '/' + c.repo + ' (' + (c.branch || 'main') + '). Neue Fotos werden direkt ins Repository gespeichert.'
+    : 'Nicht verbunden – Fotos bleiben nur in diesem Browser. Mit einer Verbindung landen sie dauerhaft im Repository und sind für alle sichtbar.';
+  $('#ghDisconnect').hidden = !c;
+  $('#ghMigrate').hidden = !(c && local);
+  $('#ghMigrate').textContent = '⬆️ ' + local + (local === 1 ? ' lokales Foto' : ' lokale Fotos') + ' ins Repository übertragen';
+  gh.owner.value = c ? c.owner : g.owner;
+  gh.repo.value = c ? c.repo : g.repo;
+  gh.branch.value = c ? (c.branch || 'main') : '';
+  gh.token.value = '';
+  gh.token.placeholder = c ? '•••• gespeichert (leer lassen = behalten)' : 'github_pat_…';
+  $('#ghErr').textContent = '';
+}
+$('#settingsBtn').addEventListener('click', () => {
+  $('#sName').value = state.settings.name || '';
+  setDateFields('s', state.settings.birth || '');
+  $('#sBirthplace').value = state.settings.birthplace || '';
+  $('#setErr').textContent = '';
+  ghRefreshUI();
+  setDlg.showModal();
+});
+$('#setCancel').addEventListener('click', () => setDlg.close());
+$('#setForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const br = readDateFields('s', true);
+  if (br.error) { $('#setErr').textContent = br.error; return; }
+  state.settings = { name: $('#sName').value.trim() || DEFAULTS.name, birth: br.value, birthplace: $('#sBirthplace').value.trim() };
+  try { await DB.put('meta', {key:'settings', value:state.settings}); } catch(e){ toast('Einstellungen konnten nicht lokal gespeichert werden.'); }
+  setDlg.close(); render(); toast('Einstellungen gespeichert ✔');
+  if (ghConnected()) ghSaveSettings(state.settings).catch(err => toast('Einstellungen nicht im Repository gespeichert: ' + err.message, 5500));
+});
+
+$('#ghConnect').addEventListener('click', async ev => {
+  const btn = ev.currentTarget, old = ghCfg(), errEl = $('#ghErr');
+  const cfg = { owner:gh.owner.value.trim(), repo:gh.repo.value.trim(), branch:gh.branch.value.trim() || 'main', token:gh.token.value.trim() || (old && old.token) || '' };
+  if (!cfg.owner || !cfg.repo || !cfg.token) { errEl.textContent = 'Bitte Benutzer, Repository und Token angeben.'; return; }
+  errEl.textContent = ''; btn.disabled = true;
+  try {
+    const res = await ghApi('GET', '', null, false, cfg);
+    if (!res.ok) throw ghError(res);
+    localStorage.setItem(GH_KEY, JSON.stringify(cfg));
+    await loadAll(); render(); ghRefreshUI();
+    toast('Mit GitHub verbunden ✔');
+  } catch(err){ errEl.textContent = err.message || 'Verbindung fehlgeschlagen.'; }
+  btn.disabled = false;
+});
+$('#ghDisconnect').addEventListener('click', async () => {
+  try { localStorage.removeItem(GH_KEY); } catch(e){}
+  await loadAll(); render(); ghRefreshUI(); toast('Verbindung getrennt');
+});
+$('#ghMigrate').addEventListener('click', async ev => {
+  const btn = ev.currentTarget;
+  const locals = state.entries.filter(e => /^data:image\//.test(e.photo));
+  btn.disabled = true; let n = 0;
+  for (const e of locals) {
+    toast('Übertrage ' + (n + 1) + ' von ' + locals.length + ' …', 8000);
+    try {
+      const r = await ghSaveEntry(e);
+      state.repoIds.add(r.id);
+      try { await DB.del('entries', e.id); } catch(x){}
+      const i = state.entries.findIndex(x => x.id === e.id);
+      if (i >= 0) state.entries[i] = { ...r, view:e.photo };
+      n++;
+    } catch(err){ $('#ghErr').textContent = 'Abgebrochen bei Foto ' + (n + 1) + ': ' + err.message; break; }
+  }
+  btn.disabled = false; render(); ghRefreshUI();
+  if (n) toast(n + (n === 1 ? ' Foto' : ' Fotos') + ' ins Repository übertragen ✔', 5000);
+});
+
+function download(blob, name){
+  const a = el('a', {href:URL.createObjectURL(blob), download:name});
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+const payload = () => ({ app:'peter60-zeitreise', version:2, settings:state.settings, entries:sorted().map(plain) });
+
+$('#exportBtn').addEventListener('click', () => {
+  download(new Blob([JSON.stringify(payload())], {type:'application/json'}), 'Peter-60-Sicherung.json');
+  toast('Sicherung heruntergeladen');
+});
+$('#savePageBtn').addEventListener('click', () => {
+  const doc = new DOMParser().parseFromString(SOURCE_HTML, 'text/html');
+  const data = { settings:state.settings, entries:sorted().map(plain) };
+  doc.getElementById('seed').textContent = JSON.stringify(data).replace(/</g, '\\u003c');
+  download(new Blob(['<!DOCTYPE html>\n' + doc.documentElement.outerHTML], {type:'text/html'}), 'Peter-60-Zeitreise.html');
+  toast('Fertige Seite heruntergeladen');
+});
+$('#importInput').addEventListener('change', async ev => {
+  const f = ev.target.files && ev.target.files[0];
+  ev.target.value = '';
+  if (!f) return;
+  try {
+    const o = JSON.parse(await f.text());
+    const imported = (Array.isArray(o.entries) ? o.entries : []).filter(validEntry);
+    for (const e of imported) {
+      await DB.put('entries', e);
+      const i = state.entries.findIndex(x => x.id === e.id);
+      if (i >= 0) state.entries[i] = e; else state.entries.push(e);
+      state.deleted.delete(e.id);
+    }
+    if (o.settings && typeof o.settings === 'object') {
+      state.settings = { ...state.settings, ...o.settings };
+      await DB.put('meta', {key:'settings', value:state.settings});
+    }
+    await DB.put('meta', {key:'deleted', value:[...state.deleted]});
+    setDlg.close(); render();
+    toast(imported.length + (imported.length === 1 ? ' Foto importiert' : ' Fotos importiert'));
+  } catch(err){ toast('Die Datei konnte nicht gelesen werden.'); }
+});
+
+$('#editBtn').addEventListener('click', ev => {
+  const on = document.body.classList.toggle('editing');
+  ev.currentTarget.setAttribute('aria-pressed', on);
+  toast(on ? 'Bearbeiten-Modus an – Einträge können geändert/gelöscht werden' : 'Bearbeiten-Modus aus');
+});
+
+/* ---------- Konfetti ---------- */
+const cv = $('#confetti'), cx = cv.getContext('2d');
+let parts = [], raf = 0;
+const COLORS = ['#ffc857','#ff6b81','#4ecdc4','#8e7dff','#ffffff','#ff9f43','#7bed9f'];
+function sizeCanvas(){ cv.width = innerWidth; cv.height = innerHeight; }
+addEventListener('resize', sizeCanvas); sizeCanvas();
+function burst(x, y, n=100, spread=14){
+  if (reduceMotion) n = Math.min(n, 18);
+  if (parts.length > 500) return;
+  for (let i = 0; i < n; i++) parts.push({
+    x, y, vx:(Math.random()-.5)*spread, vy:-Math.random()*spread - 4, g:.28 + Math.random()*.12,
+    w:6 + Math.random()*7, h:4 + Math.random()*7, r:Math.random()*6.28, vr:(Math.random()-.5)*.4,
+    c:COLORS[(Math.random()*COLORS.length)|0], age:0, max:110 + Math.random()*90, round:Math.random() < .25
+  });
+  if (!raf) raf = requestAnimationFrame(loop);
+}
+function loop(){
+  cx.clearRect(0, 0, cv.width, cv.height);
+  for (const p of parts) {
+    p.vy += p.g; p.vx *= .992; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.age++;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r);
+    cx.globalAlpha = Math.max(0, 1 - Math.max(0, p.age - p.max*.7) / (p.max*.3));
+    cx.fillStyle = p.c;
+    if (p.round) { cx.beginPath(); cx.arc(0, 0, p.w/2, 0, 6.28); cx.fill(); } else cx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    cx.restore();
+  }
+  parts = parts.filter(p => p.age < p.max && p.y < cv.height + 30);
+  raf = parts.length ? requestAnimationFrame(loop) : 0;
+  if (!raf) cx.clearRect(0, 0, cv.width, cv.height);
+}
+function partyBurst(){
+  burst(innerWidth*.15, innerHeight*.85, 110, 18);
+  burst(innerWidth*.85, innerHeight*.85, 110, 18);
+  setTimeout(() => burst(innerWidth*.5, innerHeight*.6, 130, 20), 250);
+}
+
+/* ---------- Intro-Animation ---------- */
+const intro = $('#intro');
+let introTimers = [], introRaf = 0;
+function buildBalloons(){
+  const box = $('#balloons'); box.replaceChildren();
+  const cols = ['#ff6b81','#ffc857','#4ecdc4','#8e7dff','#ff9f43','#7bed9f','#54a0ff'];
+  const n = reduceMotion ? 6 : 16;
+  for (let i = 0; i < n; i++) {
+    const b = el('div', {class:'balloon'});
+    b.style.setProperty('--c', cols[i % cols.length]);
+    b.style.setProperty('--w', (54 + Math.random()*46) + 'px');
+    b.style.setProperty('--d', (9 + Math.random()*7) + 's');
+    b.style.setProperty('--dl', (-Math.random()*10) + 's');
+    b.style.setProperty('--sway', ((Math.random()-.5)*120) + 'px');
+    b.style.left = (3 + (i / n) * 92 + Math.random()*4) + '%';
+    box.append(b);
+  }
+}
+function startIntro(){
+  intro.style.display = '';
+  intro.classList.remove('hide');
+  document.body.classList.add('noscroll');
+  $('#introTitle').classList.remove('show');
+  $('#enterBtn').classList.remove('show');
+  $('#introNum').classList.remove('pop');
+  buildBalloons();
+  const num = $('#introNum');
+  const finish = () => {
+    num.textContent = '60'; num.classList.add('pop');
+    $('#introTitle').classList.add('show'); $('#enterBtn').classList.add('show');
+    partyBurst();
+    introTimers.push(setInterval(() => burst(Math.random()*innerWidth, innerHeight*(.55 + Math.random()*.4), 70, 16), 1500));
+  };
+  if (reduceMotion) { finish(); return; }
+  num.textContent = '0';
+  const t0 = performance.now(), D = 2400;
+  const step = t => {
+    const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 3);
+    num.textContent = Math.round(60 * e);
+    if (p < 1) introRaf = requestAnimationFrame(step); else finish();
+  };
+  introRaf = requestAnimationFrame(step);
+  introTimers.push(setTimeout(() => burst(innerWidth*.5, innerHeight*.75, 60, 14), 600));
+  introTimers.push(setTimeout(() => burst(innerWidth*.25, innerHeight*.8, 50, 14), 1400));
+}
+function endIntro(){
+  introTimers.forEach(t => { clearTimeout(t); clearInterval(t); }); introTimers = [];
+  cancelAnimationFrame(introRaf);
+  intro.classList.add('hide');
+  document.body.classList.remove('noscroll');
+  setTimeout(() => { if (intro.classList.contains('hide')) intro.style.display = 'none'; }, 750);
+}
+$('#enterBtn').addEventListener('click', () => { burst(innerWidth/2, innerHeight/2, 120, 20); endIntro(); window.scrollTo(0, 0); });
+$('#skipBtn').addEventListener('click', endIntro);
+$('#partyBtn').addEventListener('click', () => { window.scrollTo(0, 0); startIntro(); });
+
+/* ---------- Start ---------- */
+startIntro();
+loadAll().then(() => {
+  render();
+  if (!DB.ok && !ghConnected()) toast('Hinweis: Fotos können in diesem Browser nicht dauerhaft gespeichert werden.', 5000);
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+}).catch(() => render());
+
+})();
+</script>
+</body>
+</html>
