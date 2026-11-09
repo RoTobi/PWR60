@@ -632,6 +632,14 @@
    "place": "London",
    "desc": "",
    "created": 1794243285727
+  },
+  {
+   "id": "23b987c4-91bf-4d6d-9411-8545834f7848",
+   "photo": "fotos/23b987c4-91bf-4d6d-9411-8545834f7848.jpg",
+   "date": "2011-05",
+   "place": "Hannover",
+   "desc": "IT-Leiter Konferenz",
+   "created": 1794243357103
   }
  ]
 }
