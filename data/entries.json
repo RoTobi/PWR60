@@ -608,6 +608,14 @@
    "place": "MTW",
    "desc": "Weihnachten",
    "created": 1794241271726
+  },
+  {
+   "id": "a9e8806f-10cf-4a76-9ca7-874584e0ef69",
+   "photo": "fotos/a9e8806f-10cf-4a76-9ca7-874584e0ef69.jpg",
+   "date": "2011-04",
+   "place": "London",
+   "desc": "",
+   "created": 1794243236831
   }
  ]
 }
