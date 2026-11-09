@@ -640,6 +640,14 @@
    "place": "Hannover",
    "desc": "IT-Leiter Konferenz",
    "created": 1794243357103
+  },
+  {
+   "id": "0356835d-9aa2-4ac6-9b46-de884e356802",
+   "photo": "fotos/0356835d-9aa2-4ac6-9b46-de884e356802.jpg",
+   "date": "2011-08",
+   "place": "Süd Tirol",
+   "desc": "",
+   "created": 1794243376055
   }
  ]
 }
