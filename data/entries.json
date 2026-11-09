@@ -296,6 +296,14 @@
    "place": "London",
    "desc": "",
    "created": 1794240323714
+  },
+  {
+   "id": "14f99e5c-7e3e-47ad-bc47-1501e32c4228",
+   "photo": "fotos/14f99e5c-7e3e-47ad-bc47-1501e32c4228.jpg",
+   "date": "2007-07",
+   "place": "Rügen",
+   "desc": "",
+   "created": 1794240344555
   }
  ]
 }
