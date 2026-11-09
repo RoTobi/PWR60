@@ -416,6 +416,14 @@
    "place": "Oma & Opa",
    "desc": "Weihnachten",
    "created": 1794240673298
+  },
+  {
+   "id": "83a12650-55e8-4d28-b0d5-24c9f8ff95f7",
+   "photo": "fotos/83a12650-55e8-4d28-b0d5-24c9f8ff95f7.jpg",
+   "date": "2009-02",
+   "place": "Paris",
+   "desc": "",
+   "created": 1794240697948
   }
  ]
 }
