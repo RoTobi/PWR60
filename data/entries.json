@@ -2168,6 +2168,14 @@
    "place": "Florenz",
    "desc": "",
    "created": 1794342973619
+  },
+  {
+   "id": "d082e7c7-9f55-4a8e-8b3e-6e47137256d7",
+   "photo": "fotos/d082e7c7-9f55-4a8e-8b3e-6e47137256d7.jpg",
+   "date": "2018-08",
+   "place": "München",
+   "desc": "",
+   "created": 1794343467858
   }
  ]
 }
