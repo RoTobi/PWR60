@@ -1824,6 +1824,14 @@
    "place": "Langenfeld",
    "desc": "Abitur Tobi",
    "created": 1794339506796
+  },
+  {
+   "id": "239d2768-6269-4128-a0d3-cd98eb90b698",
+   "photo": "fotos/239d2768-6269-4128-a0d3-cd98eb90b698.jpg",
+   "date": "2019-06",
+   "place": "Düsseldorf",
+   "desc": "Silberhochzeit",
+   "created": 1794339529172
   }
  ]
 }
