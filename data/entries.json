@@ -1208,6 +1208,14 @@
    "place": "Gran Canaria",
    "desc": "",
    "created": 1794255679599
+  },
+  {
+   "id": "45d6d0ac-4a64-4b99-aec9-644b62f5b1ca",
+   "photo": "fotos/45d6d0ac-4a64-4b99-aec9-644b62f5b1ca.jpg",
+   "date": "2017-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794334748682
   }
  ]
 }
