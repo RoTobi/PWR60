@@ -2224,6 +2224,14 @@
    "place": "Köln",
    "desc": "",
    "created": 1794343593600
+  },
+  {
+   "id": "200e0a36-f1d4-4f98-894f-83d25e12804f",
+   "photo": "fotos/200e0a36-f1d4-4f98-894f-83d25e12804f.jpg",
+   "date": "2018-09",
+   "place": "Florenz",
+   "desc": "",
+   "created": 1794343608464
   }
  ]
 }
