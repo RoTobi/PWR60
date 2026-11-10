@@ -1552,6 +1552,14 @@
    "place": "Venedig",
    "desc": "",
    "created": 1794336679404
+  },
+  {
+   "id": "3b1dbf3e-3096-486f-ae03-679616d9e9ea",
+   "photo": "fotos/3b1dbf3e-3096-486f-ae03-679616d9e9ea.jpg",
+   "date": "1966",
+   "place": "Düsseldorf",
+   "desc": "",
+   "created": 1794337817497
   }
  ]
 }
