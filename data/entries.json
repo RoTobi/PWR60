@@ -2248,6 +2248,14 @@
    "place": "Pisa",
    "desc": "",
    "created": 1794343654824
+  },
+  {
+   "id": "b7ef20b2-cd4c-4ad2-a6e8-bf87511dcc50",
+   "photo": "fotos/b7ef20b2-cd4c-4ad2-a6e8-bf87511dcc50.jpg",
+   "date": "2018-09",
+   "place": "Florenz",
+   "desc": "",
+   "created": 1794343670769
   }
  ]
 }
