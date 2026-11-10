@@ -1832,6 +1832,14 @@
    "place": "Düsseldorf",
    "desc": "Silberhochzeit",
    "created": 1794339529172
+  },
+  {
+   "id": "01bb86b0-6cd5-4cc2-b65f-6ae7c98790b6",
+   "photo": "fotos/01bb86b0-6cd5-4cc2-b65f-6ae7c98790b6.jpg",
+   "date": "2019-11",
+   "place": "Dortmund",
+   "desc": "",
+   "created": 1794339548460
   }
  ]
 }
