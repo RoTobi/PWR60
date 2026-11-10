@@ -1992,6 +1992,14 @@
    "place": "Zuhause",
    "desc": "Meisterschale Bayer04",
    "created": 1794341171640
+  },
+  {
+   "id": "1a1f3393-38ed-4d71-8b85-afeef2b72165",
+   "photo": "fotos/1a1f3393-38ed-4d71-8b85-afeef2b72165.jpg",
+   "date": "2023-10",
+   "place": "Köln",
+   "desc": "Köln Marathon",
+   "created": 1794341208047
   }
  ]
 }
