@@ -2120,6 +2120,14 @@
    "place": "Düsseldorf",
    "desc": "Corona Impfung",
    "created": 1794341935301
+  },
+  {
+   "id": "62404e53-c5af-4bc8-89e6-c45f39dd3e08",
+   "photo": "fotos/62404e53-c5af-4bc8-89e6-c45f39dd3e08.jpg",
+   "date": "2026-08",
+   "place": "Konz",
+   "desc": "",
+   "created": 1794341953549
   }
  ]
 }
