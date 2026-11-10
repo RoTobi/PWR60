@@ -2160,6 +2160,14 @@
    "place": "Hamburg",
    "desc": "",
    "created": 1794342183541
+  },
+  {
+   "id": "ff984105-4e6a-4c32-876e-4798d10bbad3",
+   "photo": "fotos/ff984105-4e6a-4c32-876e-4798d10bbad3.jpg",
+   "date": "2019-09",
+   "place": "Florenz",
+   "desc": "",
+   "created": 1794342973619
   }
  ]
 }
