@@ -1344,6 +1344,14 @@
    "place": "Düsseldorf",
    "desc": "Hochzeitstag",
    "created": 1794335076841
+  },
+  {
+   "id": "90123664-ffdc-4de4-91da-ec50595d5410",
+   "photo": "fotos/90123664-ffdc-4de4-91da-ec50595d5410.jpg",
+   "date": "2017-06",
+   "place": "Düsseldorf",
+   "desc": "",
+   "created": 1794335094704
   }
  ]
 }
