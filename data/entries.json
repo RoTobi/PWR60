@@ -2008,6 +2008,14 @@
    "place": "Düsseldorf",
    "desc": "90ter Geburtstag Opa",
    "created": 1794341233001
+  },
+  {
+   "id": "0681d601-5f28-4b09-956c-afa638cb5551",
+   "photo": "fotos/0681d601-5f28-4b09-956c-afa638cb5551.jpg",
+   "date": "2025-09",
+   "place": "Usedom",
+   "desc": "",
+   "created": 1794341272935
   }
  ]
 }
