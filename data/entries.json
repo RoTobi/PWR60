@@ -1432,6 +1432,14 @@
    "place": "",
    "desc": "50ter Geburtstag",
    "created": 1794336383797
+  },
+  {
+   "id": "4dde4fc6-f074-46f5-8075-cf44a9afe3f7",
+   "photo": "fotos/4dde4fc6-f074-46f5-8075-cf44a9afe3f7.jpg",
+   "date": "2016-10",
+   "place": "Bochum",
+   "desc": "",
+   "created": 1794336401302
   }
  ]
 }
