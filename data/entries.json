@@ -2546,6 +2546,14 @@
    "place": "",
    "desc": "Weihnachten",
    "created": 1794431361176
+  },
+  {
+   "id": "116acc0b-c22e-4789-87cd-114ed4d3b0cf",
+   "photo": "fotos/116acc0b-c22e-4789-87cd-114ed4d3b0cf.jpg",
+   "date": "2022-03",
+   "place": "Drachenfels",
+   "desc": "",
+   "created": 1794431649231
   }
  ]
 }
