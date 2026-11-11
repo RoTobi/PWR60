@@ -2368,6 +2368,14 @@
    "place": "",
    "desc": "Kommunion",
    "created": 1794413638149
+  },
+  {
+   "id": "4366887b-9a57-4fed-aadb-3713ab7bd15b",
+   "photo": "fotos/4366887b-9a57-4fed-aadb-3713ab7bd15b.jpg",
+   "date": "1994-06",
+   "place": "Baumberg",
+   "desc": "Hochzeit",
+   "created": 1794413658877
   }
  ]
 }
