@@ -2762,6 +2762,14 @@
    "place": "Köln",
    "desc": "",
    "created": 1794435361304
+  },
+  {
+   "id": "d498da9f-650c-4847-ba44-d97829535c48",
+   "photo": "fotos/d498da9f-650c-4847-ba44-d97829535c48.jpg",
+   "date": "2024-10",
+   "place": "Baumberg",
+   "desc": "80ter Geburtstag Oma Karin",
+   "created": 1794435378112
   }
  ]
 }
