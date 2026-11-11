@@ -97,7 +97,13 @@ img{max-width:100%;display:block}
 .btn.primary:hover{background:#ffd47c}
 .btn.danger{border-color:rgba(255,107,129,.5);color:#ffb3bf}
 .btn[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#06302c;font-weight:700}
+.editonly{display:none!important}
+body.editing .editonly{display:inline-flex!important}
+.btn.playing{background:var(--violet);border-color:var(--violet);color:#fff}
+input[type=range]{width:100%;accent-color:var(--gold);height:28px;margin:0}
+.musicname{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.06);margin:0 0 14px;overflow-wrap:anywhere;font-size:14px}
 @media(max-width:640px){.btn .lbl{display:none}.btn{padding:9px 12px}.brand{font-size:16px}}
+@media(max-width:480px){.brand .txt{display:none}.tools{gap:6px}.btn{padding:9px 10px}}
 
 /* ---------- Hero ---------- */
 .hero{text-align:center;padding:64px 20px 28px;max-width:900px;margin:0 auto}
@@ -112,10 +118,16 @@ img{max-width:100%;display:block}
 @keyframes bob{50%{transform:translateY(8px)}}
 
 /* ---------- Decade navigation ---------- */
+#stickyNav{position:sticky;top:var(--tb);z-index:40;background:linear-gradient(var(--bg) 72%,rgba(15,18,38,0))}
 #decadeNav{
-  position:sticky;top:var(--tb);z-index:40;display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;overflow-x:auto;
-  padding:10px 16px;background:linear-gradient(var(--bg),rgba(15,18,38,0));scrollbar-width:none;
+  display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;overflow-x:auto;
+  padding:10px 16px;scrollbar-width:none;
 }
+.filterrow{display:flex;gap:8px 10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px 16px 0}
+.filterrow label{font-size:14px;color:var(--muted)}
+.filterrow select{width:auto;max-width:min(340px,62vw);padding:8px 14px;border-radius:999px}
+.filterrow .btn{padding:7px 12px;font-size:13px}
+.filterrow .finfo{font-size:13px;color:var(--gold)}
 #decadeNav::-webkit-scrollbar{display:none}
 #decadeNav:empty{display:none}
 .chip{
@@ -129,7 +141,7 @@ img{max-width:100%;display:block}
   content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;transform:translateX(-50%);border-radius:3px;
   background:linear-gradient(var(--gold),var(--coral) 50%,var(--teal));opacity:.65;
 }
-.decade{position:relative;z-index:2;text-align:center;margin:18px 0 28px;scroll-margin-top:calc(var(--tb) + 60px)}
+.decade{position:relative;z-index:2;text-align:center;margin:18px 0 28px;scroll-margin-top:calc(var(--tb) + 130px)}
 .decade span{
   display:inline-block;font-family:var(--serif);font-size:26px;padding:6px 26px;border-radius:999px;
   background:var(--bg2);border:2px solid var(--gold);color:var(--gold);box-shadow:0 6px 24px rgba(0,0,0,.35);
@@ -271,11 +283,13 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
 
 <!-- ====== Kopfleiste ====== -->
 <header class="topbar">
-  <div class="brand">🎂 <span id="brandName">Peter</span> wird 60</div>
+  <div class="brand">🎂<span class="txt"> <span id="brandName">Peter</span> wird 60</span></div>
   <div class="tools">
+    <button class="btn" id="musicBtn" type="button" aria-pressed="false" title="Hintergrundmusik an/aus" hidden>🔇 <span class="lbl">Musik</span></button>
     <button class="btn" id="partyBtn" type="button" title="Feier-Animation nochmal abspielen">🎉 <span class="lbl">Animation</span></button>
     <button class="btn primary" id="addBtn" type="button">＋ <span class="lbl">Foto hinzufügen</span></button>
     <button class="btn" id="editBtn" type="button" aria-pressed="false" title="Einträge bearbeiten oder löschen">✏️ <span class="lbl">Bearbeiten</span></button>
+    <button class="btn editonly" id="musicEditBtn" type="button" title="Hintergrundmusik ändern">🎵 <span class="lbl">Musik ändern</span></button>
     <button class="btn" id="settingsBtn" type="button" title="Einstellungen & Datensicherung">⚙️ <span class="lbl">Einstellungen</span></button>
   </div>
 </header>
@@ -288,7 +302,15 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
   <div class="scroll-cue" aria-hidden="true">↓</div>
 </section>
 
-<nav id="decadeNav" aria-label="Zu Jahrzehnt springen"></nav>
+<div id="stickyNav">
+  <div class="filterrow" id="filterRow" hidden>
+    <label for="placeFilter">📍 Ort</label>
+    <select id="placeFilter" aria-label="Nach Ort filtern"></select>
+    <button type="button" class="btn" id="filterClear" hidden>✕ Zurücksetzen</button>
+    <span class="finfo" id="filterInfo" aria-live="polite"></span>
+  </div>
+  <nav id="decadeNav" aria-label="Zu Jahrzehnt springen"></nav>
+</div>
 <ol class="timeline" id="timeline"></ol>
 <footer>Mit Liebe gemacht 💛</footer>
 
@@ -388,6 +410,12 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
     </div>
 
     <div class="sect">
+      <h3>🎵 Hintergrundmusik</h3>
+      <p id="setMusicStatus"></p>
+      <div class="btnrow"><button type="button" class="btn" id="setMusicBtn">🎵 Musik verwalten</button></div>
+    </div>
+
+    <div class="sect">
       <h3>💾 Sichern &amp; Teilen</h3>
       <p>„Als fertige Seite speichern“ erzeugt eine HTML-Datei, in der alle Fotos bereits enthalten sind. Die Sicherung (.json) kannst du später wieder einlesen.</p>
       <div class="btnrow">
@@ -398,6 +426,27 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
       </div>
     </div>
   </form>
+</dialog>
+
+<!-- ====== Hintergrundmusik ====== -->
+<dialog id="musicDlg">
+  <div class="dlg">
+    <h2>🎵 Hintergrundmusik</h2>
+    <p class="hintline">Die Musik läuft im Hintergrund in einer Endlosschleife. Sie startet, sobald jemand auf „Zeitreise starten“ klickt (Browser erlauben Ton erst nach einem Klick) und lässt sich oben mit dem Lautsprecher-Knopf ein- und ausschalten.</p>
+    <div class="musicname" id="musicName"></div>
+    <div class="field">
+      <label for="musicVol">Lautstärke</label>
+      <input type="range" id="musicVol" min="0" max="100" step="1">
+    </div>
+    <p class="hintline" id="musicGhNote"></p>
+    <p class="err" id="musicErr" role="alert"></p>
+    <div class="btnrow">
+      <label class="btn primary" for="musicInput" id="musicPick" style="cursor:pointer">🎵 MP3 auswählen</label>
+      <input type="file" id="musicInput" accept="audio/mpeg,audio/mp3,.mp3,audio/mp4,.m4a,audio/ogg,.ogg,audio/wav,.wav" class="sr-only">
+      <button type="button" class="btn danger" id="musicRemove" hidden>Entfernen</button>
+    </div>
+    <div class="actions"><button type="button" class="btn" id="musicClose">Schließen</button></div>
+  </div>
 </dialog>
 
 <!-- ====== Lightbox ====== -->
@@ -573,8 +622,8 @@ async function ghUpdateJson(mutate){
   }
   throw new Error('Konflikt beim Speichern – bitte nochmal versuchen.');
 }
-async function ghPutFile(path, dataUrl){
-  const body = { message:'Foto hinzufügen', content:dataUrl.split(',')[1], branch:(ghCfg().branch || 'main') };
+async function ghPutFile(path, dataUrl, msg){
+  const body = { message:msg || 'Foto hinzufügen', content:dataUrl.split(',')[1], branch:(ghCfg().branch || 'main') };
   let r = await ghC('PUT', path, body);
   if (r.status === 422 || r.status === 409) {
     const g = await ghC('GET', path);
@@ -582,11 +631,11 @@ async function ghPutFile(path, dataUrl){
   }
   if (!r.ok) throw ghError(r);
 }
-async function ghDeleteFile(path){
+async function ghDeleteFile(path, msg){
   const g = await ghC('GET', path);
   if (g.status === 404) return;
   if (!g.ok) throw ghError(g);
-  const r = await ghC('DELETE', path, { message:'Foto entfernen', sha:(await g.json()).sha, branch:(ghCfg().branch || 'main') });
+  const r = await ghC('DELETE', path, { message:msg || 'Datei entfernen', sha:(await g.json()).sha, branch:(ghCfg().branch || 'main') });
   if (!r.ok && r.status !== 404) throw ghError(r);
 }
 const ghSaveEntry = entry => ghEnqueue(async () => {
@@ -615,7 +664,10 @@ async function loadRepoData(){
 
 /* ---------- Zustand ---------- */
 const DEFAULTS = { name:'Peter Röper', birth:'', birthplace:'' };
-const state = { settings:{...DEFAULTS}, entries:[], deleted:new Set(), seedIds:new Set(), repoIds:new Set() };
+const state = { settings:{...DEFAULTS}, entries:[], deleted:new Set(), seedIds:new Set(), repoIds:new Set(), filter:'' };
+const MUSIC_DIR = 'musik/';
+const MUSIC_MAX = 20 * 1024 * 1024;
+let musicLocal = null, musicView = null;
 
 function readSeed(){
   try {
@@ -647,22 +699,71 @@ async function loadAll(){
   dbEntries.filter(validEntry).forEach(e => map.set(e.id, e));
   state.entries = [...map.values()];
   state.settings = { ...DEFAULTS, ...seed.settings, ...(m.settings || {}), ...(repo ? repo.settings : {}) };
+  if (musicLocal && musicLocal.url) URL.revokeObjectURL(musicLocal.url);
+  const ml = meta.find(x => x.key === 'musicLocal');
+  musicLocal = ml && ml.value && ml.value.blob ? { name:ml.value.name || 'Musik', url:URL.createObjectURL(ml.value.blob) } : null;
 }
 const sorted = () => [...state.entries].sort((a,b) => {
   if (!a.date !== !b.date) return a.date ? -1 : 1;
   return cmpStr(a.date || '', b.date || '') || (a.created||0) - (b.created||0);
 });
+/* ---------- Ortsfilter ---------- */
+const normPlace = s => (s || '').trim().toLowerCase();
+const NO_PLACE = '__ohne__';
+function placeStats(){
+  const map = new Map(); let none = 0;
+  state.entries.forEach(e => {
+    const k = normPlace(e.place);
+    if (!k) { none++; return; }
+    const o = map.get(k); if (o) o.count++; else map.set(k, { key:k, label:e.place.trim(), count:1 });
+  });
+  return { places:[...map.values()].sort((a, b) => a.label.localeCompare(b.label, 'de')), none };
+}
+const matchFilter = e => !state.filter || (state.filter === NO_PLACE ? !normPlace(e.place) : normPlace(e.place) === state.filter);
+const visibleSorted = () => sorted().filter(matchFilter);
+function filterLabel(){
+  if (!state.filter) return '';
+  if (state.filter === NO_PLACE) return 'Ohne Ort';
+  const p = placeStats().places.find(x => x.key === state.filter);
+  return p ? p.label : '';
+}
+function renderFilter(){
+  const { places, none } = placeStats();
+  if (state.filter && state.filter !== NO_PLACE && !places.some(p => p.key === state.filter)) state.filter = '';
+  if (state.filter === NO_PLACE && !none) state.filter = '';
+  const row = $('#filterRow'), sel = $('#placeFilter');
+  row.hidden = !places.length;
+  sel.replaceChildren(el('option', {value:'', text:'Alle Orte (' + state.entries.length + ')'}));
+  places.forEach(p => sel.append(el('option', {value:p.key, text:p.label + ' (' + p.count + ')'})));
+  if (none) sel.append(el('option', {value:NO_PLACE, text:'Ohne Ort (' + none + ')'}));
+  sel.value = state.filter;
+  $('#filterClear').hidden = !state.filter;
+  const n = state.entries.filter(matchFilter).length;
+  $('#filterInfo').textContent = state.filter ? n + (n === 1 ? ' Foto' : ' Fotos') : '';
+}
+$('#placeFilter').addEventListener('change', ev => {
+  state.filter = ev.target.value;
+  render();
+  const t = $('#timeline');
+  window.scrollTo({ top:Math.max(0, t.getBoundingClientRect().top + window.scrollY - 150), behavior:reduceMotion ? 'auto' : 'smooth' });
+});
+$('#filterClear').addEventListener('click', () => { state.filter = ''; render(); });
+
 const altText = e => 'Foto' + (e.place ? ' von ' + e.place : '') + (e.date ? ', ' + fmtDate(e.date) : '');
 const firstName = () => (state.settings.name || 'Peter').trim().split(/\s+/)[0] || 'Peter';
 
 /* Foto lädt nicht (z. B. neu hochgeladen, Seite noch nicht neu veröffentlicht) */
-function imgFallback(img){
-  const src = img.getAttribute('src') || '';
+function rawUrl(path){
   const c = ghCfg(), g = ghGuess();
   const owner = c ? c.owner : g.owner, repo = c ? c.repo : g.repo, br = (c && c.branch) || 'main';
-  if (!img.dataset.tried && owner && repo && /^fotos\//.test(src)) {
+  return owner && repo ? 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/' + br + '/' + path : '';
+}
+function imgFallback(img){
+  const src = img.getAttribute('src') || '';
+  const u = /^fotos\//.test(src) ? rawUrl(src) : '';
+  if (!img.dataset.tried && u) {
     img.dataset.tried = '1';
-    img.src = 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/' + br + '/' + src;
+    img.src = u;
     return;
   }
   const w = img.closest('.imgwrap'); if (w) w.classList.add('missing');
@@ -716,7 +817,10 @@ function renderHero(){
   $('#brandName').textContent = firstName();
   $('#introTitle').textContent = 'Alles Gute, ' + firstName() + '!';
   document.title = firstName() + ' wird 60 – Eine Zeitreise';
-  $('#heroCount').textContent = n === 0 ? 'Noch keine Fotos' : n + (n === 1 ? ' Erinnerung' : ' Erinnerungen');
+  const shown = state.entries.filter(matchFilter).length;
+  $('#heroCount').textContent = n === 0 ? 'Noch keine Fotos'
+    : state.filter ? shown + ' von ' + n + ' Erinnerungen · 📍 ' + filterLabel()
+    : n + (n === 1 ? ' Erinnerung' : ' Erinnerungen');
 }
 
 function photoCard(e){
@@ -739,10 +843,12 @@ function photoCard(e){
 }
 
 function render(){
+  if (typeof applyMusic === 'function') applyMusic();
+  renderFilter();
   renderHero();
   const tl = $('#timeline');
   tl.replaceChildren();
-  const all = sorted();
+  const all = visibleSorted();
   const list = all.filter(e => e.date), undated = all.filter(e => !e.date);
   const frag = document.createDocumentFragment();
   const s = state.settings;
@@ -761,7 +867,8 @@ function render(){
     side++; frag.append(li);
   };
 
-  if (s.birth) {
+  const showBirth = s.birth && (!state.filter || (state.filter !== NO_PLACE && normPlace(s.birthplace) === state.filter));
+  if (showBirth) {
     decade(parseD(s.birth).getFullYear());
     addItem(el('article', {class:'card special'},
       el('div', {class:'emoji', text:'👶'}),
@@ -770,7 +877,13 @@ function render(){
       s.birthplace ? el('div', {class:'where', text:'📍 ' + s.birthplace}) : null));
   }
 
-  if (!all.length) {
+  if (!all.length && state.filter) {
+    side = 0;
+    frag.append(el('li', {class:'item center'},
+      el('div', {class:'empty'},
+        el('p', {}, el('strong', {text:'Keine Fotos für diesen Ort.'})),
+        el('button', {class:'btn', type:'button', onclick:() => { state.filter = ''; render(); }}, '✕ Filter zurücksetzen'))));
+  } else if (!all.length) {
     side = 0;
     frag.append(el('li', {class:'item center'},
       el('div', {class:'empty'},
@@ -913,13 +1026,14 @@ form.addEventListener('submit', async ev => {
   }
   const i = state.entries.findIndex(e => e.id === saved.id);
   if (i >= 0) state.entries[i] = saved; else state.entries.push(saved);
+  if (!matchFilter(saved)) state.filter = '';
   formDlg.close();
   render();
   if (ghConnected() && !remoteErr) toast('Im Repository gespeichert ✔ (online in ca. 1 Minute sichtbar)', 4500);
   else if (remoteErr) toast('Nicht ins Repository gespeichert: ' + remoteErr + ' – Foto bleibt lokal erhalten.', 6500);
   else if (!persisted || !DB.ok) toast('Hinweis: Das Foto ist nur vorübergehend gespeichert – bitte ⚙️ → „Als fertige Seite speichern“ nutzen.', 6000);
   else toast(editing ? 'Eintrag gespeichert ✔' : 'Foto hinzugefügt ✔');
-  const idx = sorted().findIndex(e => e.id === saved.id);
+  const idx = visibleSorted().findIndex(e => e.id === saved.id);
   setTimeout(() => {
     const cards = document.querySelectorAll('#timeline .item .card:not(.special)');
     if (cards[idx]) { cards[idx].scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth', block:'center'}); cards[idx].closest('.item').classList.add('in'); }
@@ -949,7 +1063,7 @@ async function removeEntry(id){
 const lb = $('#lightbox');
 let lbList = [], lbIdx = 0;
 function openLightbox(id){
-  lbList = sorted();
+  lbList = visibleSorted();
   lbIdx = Math.max(0, lbList.findIndex(e => e.id === id));
   showLb();
   if (!lb.open) lb.showModal();
@@ -1006,6 +1120,7 @@ $('#settingsBtn').addEventListener('click', () => {
   $('#sBirthplace').value = state.settings.birthplace || '';
   $('#setErr').textContent = '';
   ghRefreshUI();
+  $('#setMusicStatus').textContent = musicName() ? '🎵 ' + musicName() : 'Keine Hintergrundmusik festgelegt.';
   setDlg.showModal();
 });
 $('#setCancel').addEventListener('click', () => setDlg.close());
@@ -1013,7 +1128,7 @@ $('#setForm').addEventListener('submit', async ev => {
   ev.preventDefault();
   const br = readDateFields('s', true);
   if (br.error) { $('#setErr').textContent = br.error; return; }
-  state.settings = { name: $('#sName').value.trim() || DEFAULTS.name, birth: br.value, birthplace: $('#sBirthplace').value.trim() };
+  state.settings = { ...state.settings, name: $('#sName').value.trim() || DEFAULTS.name, birth: br.value, birthplace: $('#sBirthplace').value.trim() };
   try { await DB.put('meta', {key:'settings', value:state.settings}); } catch(e){ toast('Einstellungen konnten nicht lokal gespeichert werden.'); }
   setDlg.close(); render(); toast('Einstellungen gespeichert ✔');
   if (ghConnected()) ghSaveSettings(state.settings).catch(err => toast('Einstellungen nicht im Repository gespeichert: ' + err.message, 5500));
@@ -1101,6 +1216,141 @@ $('#editBtn').addEventListener('click', ev => {
   const on = document.body.classList.toggle('editing');
   ev.currentTarget.setAttribute('aria-pressed', on);
   toast(on ? 'Bearbeiten-Modus an – Einträge können geändert/gelöscht werden' : 'Bearbeiten-Modus aus');
+});
+
+/* ---------- Hintergrundmusik (Endlosschleife) ---------- */
+const MUSIC_PREF = 'p60-music';
+function musicPrefs(){
+  try { return { on:true, vol:.5, ...JSON.parse(localStorage.getItem(MUSIC_PREF) || '{}') }; } catch(e){ return { on:true, vol:.5 }; }
+}
+function saveMusicPrefs(p){ try { localStorage.setItem(MUSIC_PREF, JSON.stringify(p)); } catch(e){} }
+const audio = new Audio();
+audio.loop = true; audio.preload = 'auto'; audio.volume = Math.min(1, Math.max(0, musicPrefs().vol));
+let curSrc = '', musicTried = false;
+const musicName = () => (state.settings.music && state.settings.music.name) || (musicLocal && musicLocal.name) || '';
+function musicSource(){
+  if (musicView) return musicView;
+  if (state.settings.music && state.settings.music.path) return state.settings.music.path;
+  return musicLocal ? musicLocal.url : '';
+}
+function musicUI(){
+  const b = $('#musicBtn'), playing = !audio.paused;
+  b.hidden = !curSrc;
+  b.setAttribute('aria-pressed', playing);
+  b.classList.toggle('playing', playing);
+  b.firstChild.textContent = (playing ? '🔊' : '🔇') + ' ';
+  b.title = playing ? 'Musik ausschalten' : 'Musik einschalten';
+}
+function applyMusic(){
+  const src = musicSource();
+  if (src !== curSrc) {
+    const was = !audio.paused;
+    curSrc = src; musicTried = false;
+    if (src) { audio.src = src; if (was) audio.play().catch(() => {}); }
+    else { audio.pause(); audio.removeAttribute('src'); audio.load(); }
+  }
+  musicUI();
+}
+function tryPlayMusic(){
+  if (!curSrc || !musicPrefs().on) return;
+  audio.play().catch(() => {});
+}
+audio.addEventListener('play', musicUI);
+audio.addEventListener('pause', musicUI);
+audio.addEventListener('error', () => {
+  const m = state.settings.music, u = m && m.path ? rawUrl(m.path) : '';
+  if (!musicTried && u && curSrc === m.path) {
+    musicTried = true; audio.src = u; audio.load();
+    if (musicPrefs().on) audio.play().catch(() => {});
+  } else if (curSrc) toast('Die Musik konnte nicht geladen werden (ggf. noch in Veröffentlichung – in ca. 1 Minute neu laden).', 5000);
+});
+$('#musicBtn').addEventListener('click', () => {
+  const p = musicPrefs();
+  if (audio.paused) { p.on = true; saveMusicPrefs(p); audio.play().catch(() => toast('Ton konnte nicht gestartet werden.')); }
+  else { p.on = false; saveMusicPrefs(p); audio.pause(); }
+});
+
+const musicDlg = $('#musicDlg');
+function musicRefreshUI(){
+  const name = musicName();
+  $('#musicName').textContent = name ? '🎵 ' + name : 'Noch keine Musik festgelegt.';
+  $('#musicRemove').hidden = !name;
+  $('#musicVol').value = Math.round(audio.volume * 100);
+  $('#musicGhNote').textContent = ghConnected()
+    ? 'Die Datei wird im Repository im Ordner „musik/“ gespeichert (max. 20 MB, am besten MP3).'
+    : 'Ohne GitHub-Verbindung (⚙️ Einstellungen) bleibt die Musik nur auf diesem Gerät gespeichert.';
+}
+function openMusic(){ $('#musicErr').textContent = ''; musicRefreshUI(); musicDlg.showModal(); }
+$('#musicEditBtn').addEventListener('click', openMusic);
+$('#setMusicBtn').addEventListener('click', () => { setDlg.close(); openMusic(); });
+$('#musicClose').addEventListener('click', () => musicDlg.close());
+$('#musicVol').addEventListener('input', ev => {
+  audio.volume = Math.min(1, Math.max(0, ev.target.value / 100));
+  const p = musicPrefs(); p.vol = audio.volume; saveMusicPrefs(p);
+});
+const readAsDataURL = f => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(new Error('Datei konnte nicht gelesen werden.')); r.readAsDataURL(f); });
+function musicBusy(b){
+  $('#musicInput').disabled = b; $('#musicRemove').disabled = b; $('#musicClose').disabled = b;
+  $('#musicPick').style.opacity = b ? .55 : 1;
+  if (b) $('#musicName').textContent = '⏳ Wird gespeichert …';
+}
+$('#musicInput').addEventListener('change', async ev => {
+  const f = ev.target.files && ev.target.files[0];
+  ev.target.value = '';
+  const errEl = $('#musicErr'); errEl.textContent = '';
+  if (!f) return;
+  if (!/^audio\//.test(f.type || '') && !/\.(mp3|m4a|ogg|wav)$/i.test(f.name)) { errEl.textContent = 'Bitte eine Audiodatei wählen (am besten MP3).'; return; }
+  if (f.size > MUSIC_MAX) { errEl.textContent = 'Die Datei ist zu groß (max. 20 MB). Bitte die MP3 vorher komprimieren, z. B. auf 128 kbit/s.'; return; }
+  const ext = (f.name.match(/\.([a-z0-9]+)$/i) || [, 'mp3'])[1].toLowerCase();
+  musicBusy(true);
+  try {
+    if (ghConnected()) {
+      const path = MUSIC_DIR + 'hintergrund.' + ext;
+      const old = state.settings.music && state.settings.music.path;
+      const dataUrl = await readAsDataURL(f);
+      await ghEnqueue(() => ghPutFile(path, dataUrl, 'Hintergrundmusik'));
+      state.settings = { ...state.settings, music:{ path, name:f.name } };
+      await ghSaveSettings(state.settings);
+      if (old && old !== path) ghEnqueue(() => ghDeleteFile(old, 'Alte Musik entfernen')).catch(() => {});
+      try { await DB.put('meta', {key:'settings', value:state.settings}); } catch(e){}
+      try { await DB.del('meta', 'musicLocal'); } catch(e){}
+      if (musicLocal) { URL.revokeObjectURL(musicLocal.url); musicLocal = null; }
+      toast('Musik im Repository gespeichert ✔ (für Besucher in ca. 1 Minute online)', 5000);
+    } else {
+      await DB.put('meta', {key:'musicLocal', value:{ name:f.name, blob:f }});
+      if (musicLocal) URL.revokeObjectURL(musicLocal.url);
+      musicLocal = { name:f.name, url:URL.createObjectURL(f) };
+      toast('Musik auf diesem Gerät gespeichert ✔');
+    }
+    if (musicView) URL.revokeObjectURL(musicView);
+    musicView = ghConnected() ? URL.createObjectURL(f) : null;
+    applyMusic();
+    const p = musicPrefs(); p.on = true; saveMusicPrefs(p);
+    audio.play().catch(() => {});
+  } catch(err){ errEl.textContent = 'Speichern fehlgeschlagen: ' + (err.message || 'Unbekannter Fehler'); }
+  musicBusy(false); musicRefreshUI();
+});
+$('#musicRemove').addEventListener('click', async () => {
+  const errEl = $('#musicErr'); errEl.textContent = '';
+  const path = state.settings.music && state.settings.music.path;
+  if (path && !ghConnected()) { errEl.textContent = 'Zum Entfernen aus dem Repository bitte zuerst mit GitHub verbinden (⚙️ Einstellungen).'; return; }
+  if (!confirm('Hintergrundmusik wirklich entfernen?')) return;
+  musicBusy(true);
+  try {
+    if (path) {
+      const s = { ...state.settings }; delete s.music;
+      state.settings = s;
+      await ghSaveSettings(state.settings);
+      ghEnqueue(() => ghDeleteFile(path, 'Musik entfernen')).catch(() => {});
+      try { await DB.put('meta', {key:'settings', value:state.settings}); } catch(e){}
+    }
+    try { await DB.del('meta', 'musicLocal'); } catch(e){}
+    if (musicLocal) { URL.revokeObjectURL(musicLocal.url); musicLocal = null; }
+    if (musicView) { URL.revokeObjectURL(musicView); musicView = null; }
+    applyMusic();
+    toast('Musik entfernt');
+  } catch(err){ errEl.textContent = 'Entfernen fehlgeschlagen: ' + (err.message || 'Unbekannter Fehler'); }
+  musicBusy(false); musicRefreshUI();
 });
 
 /* ---------- Konfetti ---------- */
@@ -1191,8 +1441,8 @@ function endIntro(){
   document.body.classList.remove('noscroll');
   setTimeout(() => { if (intro.classList.contains('hide')) intro.style.display = 'none'; }, 750);
 }
-$('#enterBtn').addEventListener('click', () => { burst(innerWidth/2, innerHeight/2, 120, 20); endIntro(); window.scrollTo(0, 0); });
-$('#skipBtn').addEventListener('click', endIntro);
+$('#enterBtn').addEventListener('click', () => { tryPlayMusic(); burst(innerWidth/2, innerHeight/2, 120, 20); endIntro(); window.scrollTo(0, 0); });
+$('#skipBtn').addEventListener('click', () => { tryPlayMusic(); endIntro(); });
 $('#partyBtn').addEventListener('click', () => { window.scrollTo(0, 0); startIntro(); });
 
 /* ---------- Start ---------- */
