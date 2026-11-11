@@ -2408,6 +2408,14 @@
    "place": "Oma Anneliese & Opa Willi",
    "desc": "Hochzeitsfeier",
    "created": 1794413713589
+  },
+  {
+   "id": "9647e40b-8b70-4c1e-939e-265ef6c80a4e",
+   "photo": "fotos/9647e40b-8b70-4c1e-939e-265ef6c80a4e.jpg",
+   "date": "1994-06",
+   "place": "Baumberg",
+   "desc": "Hochzeit",
+   "created": 1794413722437
   }
  ]
 }
