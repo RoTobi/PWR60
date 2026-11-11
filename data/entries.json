@@ -2746,6 +2746,14 @@
    "place": "",
    "desc": "Hochzeit Fred und Bianca",
    "created": 1794435346472
+  },
+  {
+   "id": "997dc753-dfb1-4109-9d11-399d3c5ccc8c",
+   "photo": "fotos/997dc753-dfb1-4109-9d11-399d3c5ccc8c.jpg",
+   "date": "2024-08",
+   "place": "Köln",
+   "desc": "",
+   "created": 1794435353761
   }
  ]
 }
