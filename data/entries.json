@@ -2690,6 +2690,14 @@
    "place": "Bochum",
    "desc": "",
    "created": 1794434516091
+  },
+  {
+   "id": "b2ce8c2d-0547-4345-9ff1-a2a32768f9f8",
+   "photo": "fotos/b2ce8c2d-0547-4345-9ff1-a2a32768f9f8.jpg",
+   "date": "2023-06",
+   "place": "Schwarzwald",
+   "desc": "",
+   "created": 1794434525948
   }
  ]
 }
