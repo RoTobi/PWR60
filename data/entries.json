@@ -2424,6 +2424,14 @@
    "place": "Baumberg",
    "desc": "Hochzeit",
    "created": 1794413726909
+  },
+  {
+   "id": "79a37a8a-a238-486d-bbee-0577ba9f81eb",
+   "photo": "fotos/79a37a8a-a238-486d-bbee-0577ba9f81eb.jpg",
+   "date": "1994-06",
+   "place": "Oma Karin & Opa Gerd",
+   "desc": "Polterabend",
+   "created": 1794413752093
   }
  ]
 }
