@@ -3,10 +3,18 @@
   "name": "Peter Röper",
   "birth": "",
   "birthplace": "",
-  "music": {
-   "path": "musik/hintergrund.mp3",
-   "name": "15 Minute Countdown Timer Cozy Coffee Shop With Fireplace Music Jazz.mp3"
-  }
+  "tracks": [
+   {
+    "id": "legacy",
+    "path": "musik/hintergrund.mp3",
+    "name": "15 Minute Countdown Timer Cozy Coffee Shop With Fireplace Music Jazz.mp3"
+   },
+   {
+    "id": "t839dd4c5cfaa",
+    "path": "musik/t839dd4c5cfaa.mp3",
+    "name": "Stevie Wonder Happy Birthday.mp3"
+   }
+  ]
  },
  "entries": [
   {
