@@ -2642,6 +2642,14 @@
    "place": "Düsseldorf",
    "desc": "",
    "created": 1794434493004
+  },
+  {
+   "id": "c359587d-4981-4b0e-a3fb-1d54a58343c8",
+   "photo": "fotos/c359587d-4981-4b0e-a3fb-1d54a58343c8.jpg",
+   "date": "2023-05",
+   "place": "Hamburg",
+   "desc": "",
+   "created": 1794434501404
   }
  ]
 }
