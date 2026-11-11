@@ -2722,6 +2722,14 @@
    "place": "Düsseldorf",
    "desc": "Jubilarfeier",
    "created": 1794434547315
+  },
+  {
+   "id": "7933ef87-258b-4674-b2b5-debf0c912a4b",
+   "photo": "fotos/7933ef87-258b-4674-b2b5-debf0c912a4b.jpg",
+   "date": "2024-08",
+   "place": "Düsseldorf",
+   "desc": "",
+   "created": 1794435325282
   }
  ]
 }
