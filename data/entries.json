@@ -1,5 +1,13 @@
 {
- "settings": {},
+ "settings": {
+  "name": "Peter Röper",
+  "birth": "",
+  "birthplace": "",
+  "music": {
+   "path": "musik/hintergrund.mp3",
+   "name": "Stevie Wonder Happy Birthday.mp3"
+  }
+ },
  "entries": [
   {
    "id": "bf9c756d-5acc-4f33-b79a-d7ef9da32b9d",
