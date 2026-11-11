@@ -2384,6 +2384,14 @@
    "place": "Baumberg",
    "desc": "Hochzeit",
    "created": 1794413681637
+  },
+  {
+   "id": "dd086c7a-c5bc-461f-96e1-262d181abba5",
+   "photo": "fotos/dd086c7a-c5bc-461f-96e1-262d181abba5.jpg",
+   "date": "1994-06",
+   "place": "Baumberg",
+   "desc": "Hochzeit",
+   "created": 1794413686629
   }
  ]
 }
