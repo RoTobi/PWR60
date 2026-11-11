@@ -2496,6 +2496,14 @@
    "place": "Düsseldorf",
    "desc": "",
    "created": 1794413826045
+  },
+  {
+   "id": "155b6bfc-528b-4499-8332-23d1c2a79f5e",
+   "photo": "fotos/155b6bfc-528b-4499-8332-23d1c2a79f5e.jpg",
+   "date": "1994-06",
+   "place": "Monheim",
+   "desc": "Standesamt",
+   "created": 1794413840405
   }
  ]
 }
