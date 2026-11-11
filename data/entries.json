@@ -2738,6 +2738,14 @@
    "place": "Düsseldorf",
    "desc": "VIP Fortuna",
    "created": 1794435334193
+  },
+  {
+   "id": "b4df8d4e-2a04-4527-a56a-107717c6f5c7",
+   "photo": "fotos/b4df8d4e-2a04-4527-a56a-107717c6f5c7.jpg",
+   "date": "2024-08",
+   "place": "",
+   "desc": "Hochzeit Fred und Bianca",
+   "created": 1794435346472
   }
  ]
 }
