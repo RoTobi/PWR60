@@ -2666,6 +2666,14 @@
    "place": "Hamburg",
    "desc": "",
    "created": 1794434505980
+  },
+  {
+   "id": "176f035c-73fb-47d3-a5c2-21dfefef8539",
+   "photo": "fotos/176f035c-73fb-47d3-a5c2-21dfefef8539.jpg",
+   "date": "2023-06",
+   "place": "Bochum",
+   "desc": "",
+   "created": 1794434512603
   }
  ]
 }
