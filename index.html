@@ -14,14 +14,16 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
 body{
   margin:0;font-family:var(--sans);color:var(--text);line-height:1.5;min-height:100vh;
+  background:var(--bg);
+}
+/* fester Hintergrund als eigene Ebene (kein „background-attachment:fixed“ – das bremst das Scrollen) */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
     radial-gradient(1100px 600px at 8% -10%,rgba(142,125,255,.22),transparent 60%),
-    radial-gradient(900px 500px at 100% 8%,rgba(255,107,129,.16),transparent 60%),
-    var(--bg);
-  background-attachment:fixed;
+    radial-gradient(900px 500px at 100% 8%,rgba(255,107,129,.16),transparent 60%);
 }
 body.noscroll{overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -73,6 +75,10 @@ img{max-width:100%;display:block}
 }
 .intro-btn.show{opacity:1;transform:none;pointer-events:auto}
 .intro-btn:hover{box-shadow:0 14px 38px rgba(255,200,87,.55)}
+.intro-sound{margin-top:16px;font-size:14px;color:#ffd9e2;visibility:hidden;animation:pulse 1.6s ease-in-out infinite}
+.intro-sound.show{visibility:visible}
+@keyframes pulse{50%{opacity:.45}}
+.decade.flash span{box-shadow:0 0 0 5px rgba(255,200,87,.45),0 6px 24px rgba(0,0,0,.35)}
 #skipBtn{
   position:absolute;top:16px;right:16px;z-index:3;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
   border-radius:999px;padding:8px 16px;font-size:14px;
@@ -82,7 +88,7 @@ img{max-width:100%;display:block}
 /* ---------- Top bar ---------- */
 .topbar{
   position:sticky;top:0;z-index:50;height:var(--tb);display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:0 16px;background:rgba(15,18,38,.78);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07);
+  padding:0 16px;background:rgba(15,18,38,.95);border-bottom:1px solid rgba(255,255,255,.07);
 }
 .brand{font-family:var(--serif);font-size:19px;white-space:nowrap}
 .tools{display:flex;gap:8px;align-items:center;min-width:0;overflow-x:auto;scrollbar-width:none}
@@ -162,10 +168,11 @@ body.editing .editonly{display:inline-flex!important}
 .item.left .card{transform:rotate(-.7deg)}
 .item.right .card{transform:rotate(.7deg)}
 .card:hover{transform:translateY(-5px) rotate(0);box-shadow:0 22px 50px rgba(0,0,0,.5)}
-.imgwrap{display:block;width:100%;padding:0;border:0;background:#000;overflow:hidden;cursor:zoom-in}
-.imgwrap img{width:100%;height:auto;max-height:400px;object-fit:cover;transition:transform .5s ease}
+.imgwrap{position:relative;display:block;width:100%;aspect-ratio:4/3;padding:0;border:0;background:#10132b;overflow:hidden;cursor:zoom-in}
+.imgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:0;transition:transform .5s ease,opacity .35s ease}
+.imgwrap img.ld{opacity:1}
 .card:hover .imgwrap img{transform:scale(1.05)}
-.imgwrap.missing{min-height:150px;display:flex;align-items:center;justify-content:center;padding:20px;background:#10132b;color:var(--muted);font-size:14px;text-align:center;cursor:default}
+.imgwrap.missing{display:flex;align-items:center;justify-content:center;padding:20px;background:#10132b;color:var(--muted);font-size:14px;text-align:center;cursor:default}
 .imgwrap.missing::after{content:"⏳ Foto wird gerade veröffentlicht – in ca. 1 Minute Seite neu laden"}
 .imgwrap.missing img{display:none}
 .card .body{padding:14px 18px 16px}
@@ -206,7 +213,7 @@ dialog{
   border:0;border-radius:22px;background:var(--bg2);color:var(--text);padding:0;width:min(560px,94vw);max-height:92vh;
   box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
-dialog::backdrop{background:rgba(5,6,18,.75);backdrop-filter:blur(4px)}
+dialog::backdrop{background:rgba(5,6,18,.84)}
 .dlg{padding:22px 22px 20px}
 .dlg h2{font-family:var(--serif);margin:0 0 14px;font-size:24px}
 .field{margin:0 0 14px}
@@ -267,8 +274,11 @@ details.help ol{margin:8px 0 0;padding-left:20px}
 details.help li{margin-bottom:4px}
 
 #lightbox{width:min(1000px,96vw);background:#07091a}
-#lightbox .stage{position:relative;display:flex;align-items:center;justify-content:center;background:#000;min-height:200px}
-#lightbox .stage img{max-height:72vh;width:auto;margin:0 auto;object-fit:contain}
+#lightbox .stage{position:relative;display:flex;align-items:center;justify-content:center;background:#000;height:min(72vh,680px)}
+#lightbox .stage.loading img{opacity:.35}
+#lightbox .stage.loading::after{content:"⏳";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:34px;pointer-events:none}
+#lightbox .stage img{transition:opacity .2s ease}
+#lightbox .stage img{max-width:100%;max-height:100%;width:auto;height:auto;margin:0 auto;object-fit:contain}
 #lightbox .cap{padding:14px 20px 18px}
 #lightbox .cap .t{font-family:var(--serif);font-size:20px;color:var(--gold)}
 #lightbox .cap p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
@@ -298,6 +308,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
     <div class="intro-num" id="introNum" aria-label="60">0</div>
     <h1 class="intro-title" id="introTitle">Alles Gute, Peter!</h1>
     <button class="intro-btn" id="enterBtn" type="button">Zeitreise starten →</button>
+    <div class="intro-sound" id="introSound" aria-live="polite">🔊 Tippe irgendwo – dann startet die Musik</div>
   </div>
 </div>
 <canvas id="confetti" aria-hidden="true"></canvas>
@@ -470,7 +481,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
 <dialog id="musicDlg">
   <div class="dlg" id="musicWork">
     <h2>🎵 Hintergrundmusik</h2>
-    <p class="hintline">Alle Titel laufen nacheinander in einer Endlosschleife. Sie starten, sobald jemand auf „Zeitreise starten“ klickt (Browser erlauben Ton erst nach einem Klick). Oben in der Leiste lässt sich die Musik ein- und ausschalten.</p>
+    <p class="hintline">Alle Titel laufen nacheinander in einer Endlosschleife. Sie starten schon beim Intro. Erlaubt der Browser das nicht, startet sie beim ersten Tippen oder Klicken auf der Seite. Oben in der Leiste lässt sich die Musik ein- und ausschalten.</p>
     <div class="tracklist" id="trackList"></div>
     <p class="hintline" id="musicStatus" aria-live="polite"></p>
     <div class="field">
@@ -831,7 +842,7 @@ function setFilter(key){
   placeDlg.close();
   render();
   const t = $('#timeline');
-  window.scrollTo({ top:Math.max(0, t.getBoundingClientRect().top + window.scrollY - 150), behavior:reduceMotion ? 'auto' : 'smooth' });
+  window.scrollTo({ top:Math.max(0, t.getBoundingClientRect().top + window.scrollY - 150), behavior:'auto' });
 }
 $('#placeBtn').addEventListener('click', () => { $('#placeSearch').value = ''; renderPlaceDlg(); placeDlg.showModal(); });
 $('#placeSearch').addEventListener('input', renderPlaceDlg);
@@ -917,7 +928,7 @@ function photoCard(e){
   const missing = !e.date && !e.place ? 'Datum & Ort ergänzen' : (!e.date ? 'Datum ergänzen' : 'Ort ergänzen');
   return el('article', {class:'card', 'data-id':e.id},
     el('button', {class:'imgwrap', type:'button', 'aria-label':'Foto vergrößern', onclick:() => openLightbox(e.id)},
-      el('img', {src:photoSrc(e), alt:altText(e), loading:'lazy', onerror:ev => imgFallback(ev.target)})),
+      el('img', {onload:ev => ev.target.classList.add('ld'), onerror:ev => imgFallback(ev.target), decoding:'async', loading:'lazy', alt:altText(e), src:photoSrc(e)})),
     el('div', {class:'body'},
       el('div', {class:'when'},
         e.date ? el('time', {datetime:e.date, text:fmtDate(e.date)}) : el('span', {class:'nodate', text:'Datum unbekannt'}),
@@ -928,6 +939,16 @@ function photoCard(e){
       el('div', {class:'tools'},
         el('button', {class:'btn', type:'button', onclick:() => openForm(e)}, '✏️ Bearbeiten'),
         el('button', {class:'btn danger', type:'button', onclick:() => removeEntry(e.id)}, '🗑 Löschen'))));
+}
+
+/* Springt zu einem Element. Weite Sprünge sofort (ohne langes Durchscrollen über alle Bilder), kurze sanft. */
+function jumpTo(elm, block){
+  if (!elm) return;
+  const r = elm.getBoundingClientRect();
+  const off = block === 'center' ? Math.max(0, (innerHeight - r.height) / 2) : (parseFloat(getComputedStyle(elm).scrollMarginTop) || 0);
+  const top = Math.max(0, Math.round(r.top + window.scrollY - off));
+  const far = Math.abs(top - window.scrollY) > innerHeight * 1.6;
+  window.scrollTo({ top, behavior:(reduceMotion || far) ? 'auto' : 'smooth' });
 }
 
 function render(){
@@ -1009,7 +1030,7 @@ function render(){
   const targets = decs.map(d => [d + 'er', 'dec-' + d]);
   if (undated.length) targets.push(['Ohne Datum', 'dec-undated']);
   if (targets.length > 1) targets.forEach(([label, id]) => nav.append(
-    el('button', {class:'chip', type:'button', onclick:() => { const t = document.getElementById(id); if (t) t.scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth', block:'start'}); }}, label)));
+    el('button', {class:'chip', type:'button', onclick:() => { const t = document.getElementById(id); if (!t) return; jumpTo(t, 'start'); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1400); }}, label)));
 
   /* Einblend-Effekt beim Scrollen */
   if (io) io.disconnect();
@@ -1018,6 +1039,7 @@ function render(){
     io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), {threshold:.08});
     items.forEach(i => io.observe(i));
   } else items.forEach(i => i.classList.add('in'));
+  schedulePrefetch();
 }
 
 /* ---------- Foto-Verarbeitung ---------- */
@@ -1252,7 +1274,7 @@ form.addEventListener('submit', async ev => {
   const idx = visibleSorted().findIndex(e => e.id === saved.id);
   setTimeout(() => {
     const cards = document.querySelectorAll('#timeline .item .card:not(.special)');
-    if (cards[idx]) { cards[idx].scrollIntoView({behavior:reduceMotion ? 'auto' : 'smooth', block:'center'}); cards[idx].closest('.item').classList.add('in'); }
+    if (cards[idx]) { cards[idx].closest('.item').classList.add('in'); jumpTo(cards[idx], 'center'); }
   }, 80);
 });
 addEventListener('beforeunload', ev => { if (bgPending > 0 || queue) { ev.preventDefault(); ev.returnValue = ''; } });
@@ -1285,17 +1307,60 @@ function openLightbox(id){
   showLb();
   if (!lb.open) lb.showModal();
 }
+/* Bilder vorladen & dekodieren, damit die Großansicht sofort umschaltet */
+const imgCache = new Map();
+function preloadImg(src, prio){
+  if (!src) return Promise.resolve(false);
+  const hit = imgCache.get(src);
+  if (hit) return hit.p;
+  const img = new Image();
+  img.decoding = 'async';
+  try { img.fetchPriority = prio || 'high'; } catch(e){}
+  const p = new Promise(res => {
+    img.onload = () => { (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => res(true)); };
+    img.onerror = () => res(false);
+  });
+  img.src = src;
+  imgCache.set(src, { p, img });
+  p.then(ok => { if (!ok) imgCache.delete(src); });
+  if (imgCache.size > 30) imgCache.delete(imgCache.keys().next().value);
+  return p;
+}
+async function loadForLb(e, prio){
+  let src = photoSrc(e);
+  let ok = await preloadImg(src, prio);
+  if (!ok && /^fotos\//.test(src)) {
+    const u = rawUrl(src);
+    if (u && await preloadImg(u, prio)) { src = u; ok = true; }
+  }
+  return ok ? src : '';
+}
+let lbToken = 0;
 function showLb(){
   const e = lbList[lbIdx]; if (!e) return;
-  const img = $('#lImg');
-  delete img.dataset.tried;
-  img.src = photoSrc(e);
+  const tok = ++lbToken;
+  const img = $('#lImg'), stage = lb.querySelector('.stage');
   img.alt = altText(e);
   const lbl = ageLabel(state.settings.birth, e.date);
   $('#lTitle').textContent = [e.date ? fmtDate(e.date) : 'Datum unbekannt', e.place, lbl].filter(Boolean).join(' · ');
   $('#lDesc').textContent = e.desc || '';
   $('#lDesc').hidden = !e.desc;
   $('#lPrev').hidden = $('#lNext').hidden = lbList.length < 2;
+  /* altes Bild bleibt stehen, bis das neue fertig dekodiert ist – nur bei Wartezeit erscheint die Ladeanzeige */
+  let done = false;
+  const wait = setTimeout(() => { if (!done && tok === lbToken) stage.classList.add('loading'); }, 150);
+  loadForLb(e).then(src => {
+    done = true; clearTimeout(wait);
+    if (tok !== lbToken) return;
+    stage.classList.remove('loading');
+    if (src) {
+      img.src = src;
+      const n = lbList.length;
+      if (n > 1) {
+        [lbList[(lbIdx + 1) % n], lbList[(lbIdx - 1 + n) % n]].forEach(x => { if (x && x.id !== e.id) loadForLb(x, 'low'); });
+      }
+    } else toast('Das Foto konnte nicht geladen werden (ggf. noch in Veröffentlichung – in ca. 1 Minute erneut versuchen).', 4500);
+  });
 }
 $('#lImg').addEventListener('error', ev => imgFallback(ev.target));
 const lbStep = d => { lbIdx = (lbIdx + d + lbList.length) % lbList.length; showLb(); };
@@ -1309,23 +1374,39 @@ $('#lShow').addEventListener('click', () => {
   const c = document.querySelector('.card[data-id="' + (window.CSS && CSS.escape ? CSS.escape(e.id) : e.id) + '"]');
   if (!c) return;
   c.closest('.item').classList.add('in');
-  c.scrollIntoView({ behavior:reduceMotion ? 'auto' : 'smooth', block:'center' });
+  jumpTo(c, 'center');
   c.classList.add('flash'); setTimeout(() => c.classList.remove('flash'), 2200);
 });
 
 /* ---------- Zufälliges Foto ---------- */
-let randBag = [], lastRand = '';
-function showRandom(){
+let randBag = [], lastRand = '', prefTimer = 0;
+/* nächstes Zufallsbild bestimmen, ohne es zu verbrauchen */
+function peekRandom(){
   const list = visibleSorted();
-  if (!list.length) return toast('Noch keine Fotos vorhanden.');
+  if (!list.length) return '';
   randBag = randBag.filter(id => list.some(e => e.id === id));
   if (!randBag.length) {
     randBag = list.map(e => e.id);
     for (let i = randBag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [randBag[i], randBag[j]] = [randBag[j], randBag[i]]; }
     if (randBag.length > 1 && randBag[randBag.length - 1] === lastRand) [randBag[0], randBag[randBag.length - 1]] = [randBag[randBag.length - 1], randBag[0]];
   }
-  lastRand = randBag.pop();
-  openLightbox(lastRand);
+  return randBag[randBag.length - 1];
+}
+function prefetchRandom(){
+  const id = peekRandom(); if (!id) return;
+  const e = state.entries.find(x => x.id === id);
+  if (e) loadForLb(e, 'low');
+}
+function schedulePrefetch(){
+  clearTimeout(prefTimer);
+  prefTimer = setTimeout(prefetchRandom, 2500);
+}
+function showRandom(){
+  const id = peekRandom();
+  if (!id) return toast('Noch keine Fotos vorhanden.');
+  randBag.pop(); lastRand = id;
+  openLightbox(id);
+  setTimeout(prefetchRandom, 60);   /* das übernächste Bild schon im Hintergrund laden */
 }
 $('#randomBtn').addEventListener('click', showRandom);
 $('#lRandom').addEventListener('click', showRandom);
@@ -1541,9 +1622,34 @@ function musicUI(){
   b.firstChild.textContent = (playing ? '🔊' : '🔇') + ' ';
   b.title = playing ? 'Musik ausschalten' : 'Musik einschalten';
   $('#musicNext').hidden = n < 2;
+  if (playing) soundHint(false);
   renderTrackList();
 }
 function tryPlayMusic(){ if (curId && musicPrefs().on) audio.play().catch(() => {}); }
+/* Musik schon im Intro: zuerst direkt versuchen; blockiert der Browser das, startet sie bei der ersten Berührung/Taste/Klick */
+const SND_EVENTS = ['pointerdown', 'pointerup', 'touchend', 'keydown', 'click'];
+let sndArmed = false;
+const introVisible = () => { const i = $('#intro'); return !i.classList.contains('hide') && i.style.display !== 'none'; };
+const soundHint = on => $('#introSound').classList.toggle('show', !!on);
+function armSoundGesture(){
+  if (sndArmed) return;
+  sndArmed = true;
+  const disarm = () => { sndArmed = false; SND_EVENTS.forEach(t => removeEventListener(t, go, true)); };
+  const go = ev => {
+    if (ev.target && ev.target.closest && ev.target.closest('#musicBtn, #musicNext')) return;
+    if (!curId || !musicPrefs().on) { disarm(); soundHint(false); return; }
+    audio.play().then(() => { soundHint(false); disarm(); }).catch(() => {});
+  };
+  SND_EVENTS.forEach(t => addEventListener(t, go, true));
+}
+async function autoStartMusic(){
+  if (!audio.paused) { soundHint(false); return; }
+  if (!curId || !musicPrefs().on) return;
+  try { await audio.play(); soundHint(false); }
+  catch(e){
+    if (e && e.name === 'NotAllowedError') { armSoundGesture(); if (introVisible()) soundHint(true); }
+  }
+}
 audio.addEventListener('play', musicUI);
 audio.addEventListener('pause', musicUI);
 audio.addEventListener('playing', () => { errRun = 0; });
@@ -1773,6 +1879,7 @@ $('#partyBtn').addEventListener('click', () => { window.scrollTo(0, 0); startInt
 startIntro();
 loadAll().then(() => {
   render();
+  autoStartMusic();
   if (!DB.ok && !ghConnected()) toast('Hinweis: Fotos können in diesem Browser nicht dauerhaft gespeichert werden.', 5000);
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 }).catch(() => render());
