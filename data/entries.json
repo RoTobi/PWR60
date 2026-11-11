@@ -2504,6 +2504,14 @@
    "place": "Monheim",
    "desc": "Standesamt",
    "created": 1794413840405
+  },
+  {
+   "id": "b07f046e-bde0-4237-8de9-7f79a806618c",
+   "photo": "fotos/b07f046e-bde0-4237-8de9-7f79a806618c.jpg",
+   "date": "1970-12",
+   "place": "",
+   "desc": "",
+   "created": 1794413873541
   }
  ]
 }
