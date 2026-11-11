@@ -2602,6 +2602,14 @@
    "place": "Baumberg",
    "desc": "Kirchliche Trauung",
    "created": 1794432485324
+  },
+  {
+   "id": "aee6c99e-edf1-44b3-bfdb-694ec7dd035a",
+   "photo": "fotos/aee6c99e-edf1-44b3-bfdb-694ec7dd035a.jpg",
+   "date": "1970",
+   "place": "",
+   "desc": "",
+   "created": 1794433323201
   }
  ]
 }
