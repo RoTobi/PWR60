@@ -3927,6 +3927,14 @@
    "place": "Nürnberg",
    "desc": "",
    "created": 1794590431427
+  },
+  {
+   "id": "21af8fb1-d511-40a2-95e9-9d15c8a3cfa4",
+   "photo": "fotos/21af8fb1-d511-40a2-95e9-9d15c8a3cfa4.jpg",
+   "date": "1987",
+   "place": "Wuppertal",
+   "desc": "",
+   "created": 1794590441194
   }
  ]
 }
