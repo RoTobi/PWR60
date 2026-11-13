@@ -3391,6 +3391,14 @@
    "place": "Fotostudio",
    "desc": "",
    "created": 1794588599186
+  },
+  {
+   "id": "a6502009-3aa8-4432-84c3-2dadc1a92379",
+   "photo": "fotos/a6502009-3aa8-4432-84c3-2dadc1a92379.jpg",
+   "date": "2002-12",
+   "place": "MTW",
+   "desc": "Weihnachten",
+   "created": 1794588613194
   }
  ]
 }
