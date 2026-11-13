@@ -302,24 +302,27 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
 .pref-grid label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px;min-height:2.8em}
 @media(max-width:560px){.pref-grid{grid-template-columns:1fr}.pref-grid label{min-height:0}}
 /* ---------- Diashow ---------- */
-#showDlg{width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;background:#05061a;overflow:hidden}
-.show{display:flex;flex-direction:column;height:100%}
-.show-top{display:flex;align-items:center;gap:8px;padding:10px 14px;flex-wrap:wrap}
-.show-top .shcount{margin-left:auto;color:var(--muted);font-size:14px}
-.show-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#000}
-.show-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;cursor:pointer}
+#showDlg{width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;background:#000;overflow:hidden}
+.shw{display:flex;flex-direction:column;height:100%}
+.shw.idle{cursor:none}
+.show-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
+.show-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .show-stage img.in{animation:shIn .45s ease}
 @keyframes shIn{from{opacity:0}to{opacity:1}}
-.show-prog{height:4px;background:rgba(255,255,255,.12)}
-.show-prog div{height:100%;background:linear-gradient(90deg,var(--gold),var(--coral));transform-origin:left;transform:scaleX(0);will-change:transform}
-.show-cap{padding:12px 20px 4px;max-height:30vh;overflow-y:auto}
+/* Leisten liegen über dem Bild und erscheinen nur bei Mausbewegung */
+.show-top,.show-ctl{position:absolute;left:0;right:0;z-index:5;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;transition:opacity .25s ease}
+.show-top{top:0;background:linear-gradient(rgba(5,6,18,.85),rgba(5,6,18,0))}
+.show-ctl{bottom:0;gap:12px;background:linear-gradient(rgba(5,6,18,0),rgba(5,6,18,.85))}
+.shw.idle .show-top,.shw.idle .show-ctl{opacity:0;pointer-events:none}
+.show-top .shcount{margin-left:auto;color:#d7daf0;font-size:14px}
+.show-ctl .shsec{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;max-width:380px;font-size:14px;color:var(--muted)}
+.show-ctl .shsec b{min-width:3em;color:var(--text)}
+.show-cap{padding:12px 20px 16px;max-height:30vh;overflow-y:auto;background:#000}
 .show-cap .t{font-family:var(--serif);font-size:clamp(20px,3.2vw,30px);color:var(--gold)}
 .show-cap .age{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:8px}
 .show-cap .where{margin-top:2px;color:#d7daf0;font-size:clamp(15px,2.2vw,19px)}
-.show-cap .desc{margin:6px 0 0;font-size:clamp(15px,2.2vw,19px)}
-.show-ctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 14px 14px}
-.show-ctl .shsec{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;max-width:380px;font-size:14px;color:var(--muted)}
-.show-ctl .shsec b{min-width:3em;color:var(--text)}
+.show-cap .desc{margin:6px 0 0;font-size:clamp(15px,2.2vw,19px);white-space:pre-wrap;overflow-wrap:anywhere}
+#toast{width:max-content}
 /* ---------- Quiz ---------- */
 #quizDlg{width:min(640px,96vw)}
 .qz-img{width:100%;height:min(38vh,340px);object-fit:contain;background:#000;border-radius:14px;margin:0 0 14px}
@@ -561,6 +564,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
     <p id="lDesc"></p>
     <div class="btnrow" style="margin-top:12px">
       <button type="button" class="btn" id="lRandom">🎲 Zufallsbild</button>
+      <button type="button" class="btn" id="lSlide">🎞 Diashow ab hier</button>
       <button type="button" class="btn" id="lShow">⬇️ Im Zeitstrahl zeigen</button>
       <button type="button" class="btn" id="lEdit">✏️ Datum / Ort / Beschreibung ändern</button>
     </div>
@@ -569,27 +573,24 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
 
 <!-- ====== Diashow ====== -->
 <dialog id="showDlg" aria-label="Diashow">
-  <div class="show">
-    <div class="show-top">
-      <button type="button" class="btn" id="shLin" aria-pressed="true">🕰 Zeitstrahl</button>
-      <button type="button" class="btn" id="shRnd" aria-pressed="false">🎲 Zufall</button>
-      <span class="shcount" id="shCount"></span>
-      <button type="button" class="btn" id="shClose" aria-label="Diashow beenden">✕ <span class="lbl">Beenden</span></button>
-    </div>
+  <div class="shw idle" id="showWrap">
     <div class="show-stage" id="shStage">
       <img id="shImg" alt="">
-      <button class="lbtn prev" id="shPrev" type="button" aria-label="Vorheriges Foto">‹</button>
-      <button class="lbtn next" id="shNext" type="button" aria-label="Nächstes Foto">›</button>
+      <div class="show-top" id="shTop">
+        <button type="button" class="btn" id="shLin" aria-pressed="true">🕰 Zeitstrahl</button>
+        <button type="button" class="btn" id="shRnd" aria-pressed="false">🎲 Zufall</button>
+        <span class="shcount" id="shCount"></span>
+        <button type="button" class="btn" id="shClose" aria-label="Diashow beenden">✕ <span class="lbl">Beenden</span></button>
+      </div>
+      <div class="show-ctl" id="shCtl">
+        <button type="button" class="btn primary" id="shPlay">⏸ Pause</button>
+        <label class="shsec">⏱ <input type="range" id="shSec" min="1" max="15" step="1" aria-label="Sekunden pro Bild"> <b id="shSecV">5 s</b></label>
+      </div>
     </div>
-    <div class="show-prog"><div id="shBar"></div></div>
     <div class="show-cap">
       <div class="t"><span id="shDate"></span><span class="age" id="shAge"></span></div>
       <div class="where" id="shPlace" hidden></div>
       <p class="desc" id="shDesc" hidden></p>
-    </div>
-    <div class="show-ctl">
-      <button type="button" class="btn primary" id="shPlay">⏸ Pause</button>
-      <label class="shsec">⏱ <input type="range" id="shSec" min="1" max="15" step="1" aria-label="Sekunden pro Bild"> <b id="shSecV">5 s</b></label>
     </div>
   </div>
 </dialog>
@@ -1527,6 +1528,7 @@ function showRandom(){
 }
 $('#randomBtn').addEventListener('click', showRandom);
 $('#lRandom').addEventListener('click', showRandom);
+$('#lSlide').addEventListener('click', () => { const e = lbList[lbIdx]; lb.close(); openShow(e && e.id); });
 lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });
 document.addEventListener('keydown', ev => {
   if (lb.open) {
@@ -1534,6 +1536,7 @@ document.addEventListener('keydown', ev => {
     if (ev.key === 'ArrowRight') lbStep(1);
   }
   if (shDlg.open) {
+    shWake();
     if (ev.key === 'ArrowLeft') shStep(-1);
     if (ev.key === 'ArrowRight') shStep(1);
     if (ev.key === ' ' && !/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(ev.target.tagName)) { ev.preventDefault(); shPlay(!show.play); }
@@ -1906,7 +1909,7 @@ async function removeTrack(id){
 }
 
 /* ---------- Diashow ---------- */
-const shDlg = $('#showDlg'), shImg = $('#shImg'), shBar = $('#shBar');
+const shDlg = $('#showDlg'), shImg = $('#shImg'), shWrap = $('#showWrap');
 const show = { mode:'lin', seq:[], i:0, el:0, play:true, ready:false, raf:0, last:0 };
 let shTok = 0;
 function shBuild(keepId){
@@ -1935,7 +1938,7 @@ function shStep(d){
 async function shShow(){
   const e = show.seq[show.i]; if (!e) return;
   const tok = ++shTok;
-  show.ready = false; show.el = 0; shBar.style.transform = 'scaleX(0)';
+  show.ready = false; show.el = 0;
   const src = await loadForLb(e);                 /* altes Bild bleibt stehen, bis das neue bereit ist */
   if (tok !== shTok || !shDlg.open) return;
   if (src) { shImg.src = src; shImg.classList.remove('in'); void shImg.offsetWidth; shImg.classList.add('in'); }
@@ -1958,9 +1961,7 @@ function shTick(t){
   const dt = Math.min(250, Math.max(0, t - show.last)); show.last = t;
   if (show.ready) {
     show.el += dt;
-    const D = cfg.showSec * 1000;
-    shBar.style.transform = 'scaleX(' + Math.min(1, show.el / D).toFixed(3) + ')';
-    if (show.el >= D) shStep(1);
+    if (show.el >= cfg.showSec * 1000) shStep(1);
   }
   show.raf = requestAnimationFrame(shTick);
 }
@@ -1972,26 +1973,42 @@ function shSetMode(m){
   show.mode = m; setPref('showMode', m); shModeUI();
   shBuild(cur && cur.id); shShow();
 }
-function openShow(){
+/* Leisten nur bei Mausbewegung / Berührung / Taste sichtbar */
+let shIdleT = 0, shLX = -1, shLY = -1;
+function shWake(){
+  shWrap.classList.remove('idle');
+  clearTimeout(shIdleT);
+  shIdleT = setTimeout(shSleep, 2500);
+}
+function shSleep(){
+  if (!shDlg.open) return;
+  if ($('#shTop').matches(':hover') || $('#shCtl').matches(':hover') || $('#shTop').contains(document.activeElement) && document.activeElement.matches(':focus-visible') || $('#shCtl').contains(document.activeElement) && document.activeElement.matches(':focus-visible')) { shIdleT = setTimeout(shSleep, 1500); return; }
+  shWrap.classList.add('idle');
+}
+shWrap.addEventListener('pointermove', ev => {
+  if (Math.abs(ev.clientX - shLX) + Math.abs(ev.clientY - shLY) < 3) return;   /* keine „Geister“-Bewegung beim Bildwechsel */
+  shLX = ev.clientX; shLY = ev.clientY; shWake();
+});
+shWrap.addEventListener('pointerdown', shWake);
+function openShow(startId){
   if (!visibleSorted().length) return toast('Noch keine Fotos vorhanden.');
   show.mode = cfg.showMode; show.raf = 0;
-  shBuild(''); shModeUI(); shPlay(true);
+  shBuild(startId || ''); shModeUI(); shPlay(true);
   $('#shSec').value = cfg.showSec; $('#shSecV').textContent = cfg.showSec + ' s';
+  shWrap.classList.add('idle'); shLX = shLY = -1;
   shDlg.showModal(); shShow();
 }
-$('#showBtn').addEventListener('click', openShow);
+$('#showBtn').addEventListener('click', () => openShow());
 $('#shClose').addEventListener('click', () => shDlg.close());
 $('#shLin').addEventListener('click', () => shSetMode('lin'));
 $('#shRnd').addEventListener('click', () => shSetMode('rnd'));
-$('#shPrev').addEventListener('click', () => shStep(-1));
-$('#shNext').addEventListener('click', () => shStep(1));
 $('#shPlay').addEventListener('click', () => shPlay(!show.play));
-shImg.addEventListener('click', () => shPlay(!show.play));
+shImg.addEventListener('click', () => { if (!shImg.matches(':hover')) return; shPlay(!show.play); });   /* nur Maus: Klick = Pause/Weiter */
 $('#shSec').addEventListener('input', ev => {
   const v = clampInt(ev.target.value, 1, 15, 5);
   setPref('showSec', v); $('#shSecV').textContent = v + ' s';
 });
-shDlg.addEventListener('close', () => { shTok++; cancelAnimationFrame(show.raf); show.raf = 0; });
+shDlg.addEventListener('close', () => { shTok++; cancelAnimationFrame(show.raf); show.raf = 0; clearTimeout(shIdleT); });
 
 /* ---------- Einstellungen: Diashow & Intro ---------- */
 [['pShow', 'showSec'], ['pDelay', 'introDelay'], ['pAuto', 'introAuto']].forEach(([id, k]) => {
