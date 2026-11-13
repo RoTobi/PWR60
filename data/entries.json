@@ -3151,6 +3151,14 @@
    "place": "Oma Anneliese & Opa Willi",
    "desc": "Weihnachten",
    "created": 1794588192035
+  },
+  {
+   "id": "6f987928-a77b-4bad-9b76-2a2f47c7e6b6",
+   "photo": "fotos/6f987928-a77b-4bad-9b76-2a2f47c7e6b6.jpg",
+   "date": "1997-12",
+   "place": "Baumberg",
+   "desc": "Weihnachten",
+   "created": 1794588218715
   }
  ]
 }
