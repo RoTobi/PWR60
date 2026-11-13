@@ -3423,6 +3423,14 @@
    "place": "Baumberg",
    "desc": "1ter Geburtstag Toni",
    "created": 1794588689569
+  },
+  {
+   "id": "95df84c9-ba66-4eec-bf39-1edcfb277a0d",
+   "photo": "fotos/95df84c9-ba66-4eec-bf39-1edcfb277a0d.jpg",
+   "date": "1998-09",
+   "place": "Teneriffa",
+   "desc": "",
+   "created": 1794588715921
   }
  ]
 }
