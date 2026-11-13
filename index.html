@@ -219,7 +219,7 @@ dialog::backdrop{background:rgba(5,6,18,.84)}
 .field{margin:0 0 14px}
 .field label,.field .lab{display:block;font-size:14px;color:var(--muted);margin-bottom:5px}
 .field label .req{color:var(--coral)}
-input[type=text],input[type=password],textarea,select{
+input[type=text],input[type=password],input[type=number],textarea,select{
   width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:var(--text);font:inherit;
 }
 select{background:#232850;color-scheme:dark;padding:11px 10px}
@@ -295,12 +295,49 @@ details.help li{margin-bottom:4px}
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+/* ---------- Intro-Wartezeit, Einstellungen ---------- */
+#intro.wait .intro-content,#intro.wait #balloons{display:none}
+.pref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.pref-grid label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px;min-height:2.8em}
+@media(max-width:560px){.pref-grid{grid-template-columns:1fr}.pref-grid label{min-height:0}}
+/* ---------- Diashow ---------- */
+#showDlg{width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;background:#05061a;overflow:hidden}
+.show{display:flex;flex-direction:column;height:100%}
+.show-top{display:flex;align-items:center;gap:8px;padding:10px 14px;flex-wrap:wrap}
+.show-top .shcount{margin-left:auto;color:var(--muted);font-size:14px}
+.show-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#000}
+.show-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;cursor:pointer}
+.show-stage img.in{animation:shIn .45s ease}
+@keyframes shIn{from{opacity:0}to{opacity:1}}
+.show-prog{height:4px;background:rgba(255,255,255,.12)}
+.show-prog div{height:100%;background:linear-gradient(90deg,var(--gold),var(--coral));transform-origin:left;transform:scaleX(0);will-change:transform}
+.show-cap{padding:12px 20px 4px;max-height:30vh;overflow-y:auto}
+.show-cap .t{font-family:var(--serif);font-size:clamp(20px,3.2vw,30px);color:var(--gold)}
+.show-cap .age{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:8px}
+.show-cap .where{margin-top:2px;color:#d7daf0;font-size:clamp(15px,2.2vw,19px)}
+.show-cap .desc{margin:6px 0 0;font-size:clamp(15px,2.2vw,19px)}
+.show-ctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 14px 14px}
+.show-ctl .shsec{display:flex;align-items:center;gap:8px;flex:1;min-width:200px;max-width:380px;font-size:14px;color:var(--muted)}
+.show-ctl .shsec b{min-width:3em;color:var(--text)}
+/* ---------- Quiz ---------- */
+#quizDlg{width:min(640px,96vw)}
+.qz-img{width:100%;height:min(38vh,340px);object-fit:contain;background:#000;border-radius:14px;margin:0 0 14px}
+.qz-opts{display:flex;flex-direction:column;gap:6px}
+.popt.right{background:#2e9e6b;border-color:#2e9e6b;color:#fff;font-weight:700}
+.popt.wrong{background:#b8435a;border-color:#b8435a;color:#fff}
+.qz-res{margin:0 0 6px;padding:8px 12px;border-radius:10px;font-size:15px;background:rgba(255,255,255,.06)}
+.qz-res.ok{border-left:4px solid #7bed9f}
+.qz-res.bad{border-left:4px solid var(--coral)}
+.qz-score{font-family:var(--serif);font-size:48px;color:var(--gold);text-align:center;margin:10px 0}
+.dategrid.d1{grid-template-columns:minmax(0,220px)}
+.dategrid.d2{grid-template-columns:1.8fr 1.3fr}
 </style>
 </head>
 <body class="noscroll">
 
 <!-- ====== Geburtstags-Intro ====== -->
-<div id="intro" role="dialog" aria-label="Geburtstagsanimation">
+<div id="intro" class="wait" role="dialog" aria-label="Geburtstagsanimation">
   <div id="balloons" aria-hidden="true"></div>
   <button id="skipBtn" type="button">Überspringen ✕</button>
   <div class="intro-content">
@@ -320,6 +357,8 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
     <button class="btn" id="musicBtn" type="button" aria-pressed="false" title="Hintergrundmusik an/aus" hidden>🔇 <span class="lbl">Musik</span></button>
     <button class="btn" id="musicNext" type="button" title="Nächstes Musikstück" aria-label="Nächstes Musikstück" hidden>⏭</button>
     <button class="btn" id="randomBtn" type="button" title="Zufälliges Foto anzeigen" hidden>🎲 <span class="lbl">Zufall</span></button>
+    <button class="btn" id="showBtn" type="button" title="Diashow starten" hidden>🎞 <span class="lbl">Diashow</span></button>
+    <button class="btn" id="quizBtn" type="button" title="Quiz starten" hidden>🧠 <span class="lbl">Quiz</span></button>
     <button class="btn" id="placeBtn" type="button" title="Nach Ort filtern" hidden>📍 <span class="lbl" id="placeBtnLbl">Ort</span></button>
     <button class="btn" id="partyBtn" type="button" title="Feier-Animation nochmal abspielen">🎉 <span class="lbl">Animation</span></button>
     <button class="btn primary" id="addBtn" type="button">＋ <span class="lbl">Foto hinzufügen</span></button>
@@ -449,6 +488,16 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
     </div>
 
     <div class="sect">
+      <h3>🎞 Diashow &amp; Intro</h3>
+      <p>Gilt für diesen Browser. Änderungen werden sofort übernommen.</p>
+      <div class="pref-grid">
+        <div><label for="pShow">Diashow: Sekunden pro Bild (1–15)</label><input type="number" id="pShow" min="1" max="15" step="1" inputmode="numeric"></div>
+        <div><label for="pDelay">Intro startet nach … Sekunden (0–30)</label><input type="number" id="pDelay" min="0" max="30" step="1" inputmode="numeric"></div>
+        <div><label for="pAuto">Weiter zum Zeitstrahl nach … Sekunden (5–600)</label><input type="number" id="pAuto" min="5" max="600" step="1" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <div class="sect">
       <h3>🎵 Hintergrundmusik</h3>
       <p id="setMusicStatus"></p>
       <div class="btnrow"><button type="button" class="btn" id="setMusicBtn">🎵 Musik verwalten</button></div>
@@ -518,6 +567,34 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
   </div>
 </dialog>
 
+<!-- ====== Diashow ====== -->
+<dialog id="showDlg" aria-label="Diashow">
+  <div class="show">
+    <div class="show-top">
+      <button type="button" class="btn" id="shLin" aria-pressed="true">🕰 Zeitstrahl</button>
+      <button type="button" class="btn" id="shRnd" aria-pressed="false">🎲 Zufall</button>
+      <span class="shcount" id="shCount"></span>
+      <button type="button" class="btn" id="shClose" aria-label="Diashow beenden">✕ <span class="lbl">Beenden</span></button>
+    </div>
+    <div class="show-stage" id="shStage">
+      <img id="shImg" alt="">
+      <button class="lbtn prev" id="shPrev" type="button" aria-label="Vorheriges Foto">‹</button>
+      <button class="lbtn next" id="shNext" type="button" aria-label="Nächstes Foto">›</button>
+    </div>
+    <div class="show-prog"><div id="shBar"></div></div>
+    <div class="show-cap">
+      <div class="t"><span id="shDate"></span><span class="age" id="shAge"></span></div>
+      <div class="where" id="shPlace" hidden></div>
+      <p class="desc" id="shDesc" hidden></p>
+    </div>
+    <div class="show-ctl">
+      <button type="button" class="btn primary" id="shPlay">⏸ Pause</button>
+      <label class="shsec">⏱ <input type="range" id="shSec" min="1" max="15" step="1" aria-label="Sekunden pro Bild"> <b id="shSecV">5 s</b></label>
+    </div>
+  </div>
+</dialog>
+<!-- ====== Quiz ====== -->
+<dialog id="quizDlg" aria-label="Quiz"><div class="dlg" id="quizBody"></div></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <!-- Eingebettete Daten (wird beim Speichern als fertige Seite befüllt) -->
@@ -545,6 +622,20 @@ const el = (tag, props={}, ...kids) => {
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const uid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
 const isHttp = /^https?:$/.test(location.protocol);
+/* ---------- Einstellungen für Diashow & Intro (nur in diesem Browser) ---------- */
+const PREF_KEY = 'p60-prefs';
+const PREF_DEF = { showSec:5, introDelay:3, introAuto:30, showMode:'lin' };
+const PREF_LIM = { showSec:[1, 15], introDelay:[0, 30], introAuto:[5, 600] };
+const clampInt = (v, lo, hi, d) => { if (v === '' || v == null) return d; const n = Math.round(+v); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : d; };
+const cfg = (() => {
+  let o = {}; try { o = JSON.parse(localStorage.getItem(PREF_KEY) || '{}') || {}; } catch(e){}
+  const c = { ...PREF_DEF };
+  for (const k in PREF_LIM) c[k] = clampInt(o[k], PREF_LIM[k][0], PREF_LIM[k][1], PREF_DEF[k]);
+  c.showMode = o.showMode === 'rnd' ? 'rnd' : 'lin';
+  return c;
+})();
+const setPref = (k, v) => { cfg[k] = v; try { localStorage.setItem(PREF_KEY, JSON.stringify(cfg)); } catch(e){} };
+const shuffle = a => { const x = a.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; } return x; };
 
 /* ---------- Datum-Helfer (JJJJ-MM-TT, JJJJ-MM oder JJJJ) ---------- */
 const dFmt = new Intl.DateTimeFormat('de-DE', {day:'numeric', month:'long', year:'numeric'});
@@ -790,14 +881,28 @@ async function loadAll(){
   [...localUrls.keys()].forEach(k => { if (!keep.has(k)) { URL.revokeObjectURL(localUrls.get(k)); localUrls.delete(k); } });
   localTracks = lt.sort((a, b) => a.created - b.created);
 }
-const sorted = () => [...state.entries].sort((a,b) => {
-  if (!a.date !== !b.date) return a.date ? -1 : 1;
-  return cmpStr(a.date || '', b.date || '') || (a.created||0) - (b.created||0);
-});
+/* Sortierung und Orts-Statistik werden einmal pro Render berechnet und wiederverwendet */
+const memo = { sorted:null, sn:-1, stats:null, pn:-1 };
+const invalidate = () => { memo.sorted = null; memo.stats = null; };
+const sorted = () => {
+  const n = state.entries.length;
+  if (memo.sorted && memo.sn === n) return memo.sorted;
+  memo.sn = n;
+  return memo.sorted = [...state.entries].sort((a,b) => {
+    if (!a.date !== !b.date) return a.date ? -1 : 1;
+    return cmpStr(a.date || '', b.date || '') || (a.created||0) - (b.created||0);
+  });
+};
 /* ---------- Ortsfilter ---------- */
 const normPlace = s => (s || '').trim().toLowerCase();
 const NO_PLACE = '__ohne__';
 function placeStats(){
+  const n = state.entries.length;
+  if (memo.stats && memo.pn === n) return memo.stats;
+  memo.pn = n;
+  return memo.stats = computePlaceStats();
+}
+function computePlaceStats(){
   const map = new Map(); let none = 0;
   state.entries.forEach(e => {
     const k = normPlace(e.place);
@@ -823,6 +928,8 @@ function renderFilterBtn(){
   b.classList.toggle('active', !!state.filter);
   $('#placeBtnLbl').textContent = state.filter ? filterLabel() : 'Ort';
   $('#randomBtn').hidden = !state.entries.length;
+  $('#showBtn').hidden = !state.entries.length;
+  $('#quizBtn').hidden = !quizPool().length;
 }
 const placeDlg = $('#placeDlg');
 function renderPlaceDlg(){
@@ -924,8 +1031,8 @@ function renderHero(){
 
 function photoCard(e){
   const lbl = ageLabel(state.settings.birth, e.date);
-  const incomplete = !e.date || !e.place;
-  const missing = !e.date && !e.place ? 'Datum & Ort ergänzen' : (!e.date ? 'Datum ergänzen' : 'Ort ergänzen');
+  const incomplete = !e.date;           /* fehlender Ort: keine Meldung (ergänzbar über ✏️) */
+  const missing = 'Datum ergänzen';
   return el('article', {class:'card', 'data-id':e.id},
     el('button', {class:'imgwrap', type:'button', 'aria-label':'Foto vergrößern', onclick:() => openLightbox(e.id)},
       el('img', {onload:ev => ev.target.classList.add('ld'), onerror:ev => imgFallback(ev.target), decoding:'async', loading:'lazy', alt:altText(e), src:photoSrc(e)})),
@@ -952,6 +1059,7 @@ function jumpTo(elm, block){
 }
 
 function render(){
+  invalidate();
   renderFilterBtn();
   applyMusic();
   renderHero();
@@ -1153,6 +1261,14 @@ function startQueue(files){
   setErr('');
   showQueueItem();
 }
+function queuePhoto(q, i){
+  if (i >= q.files.length) return null;
+  q.pre = q.pre || {};
+  if (!q.pre[i]) { q.pre[i] = fileToDataURL(q.files[i]); q.pre[i].catch(() => {}); }
+  const p = q.pre[i];
+  if (i === q.i) delete q.pre[i];
+  return p;
+}
 async function showQueueItem(){
   const q = queue; if (!q) return;
   if (q.i >= q.files.length) return finishQueue();
@@ -1160,7 +1276,7 @@ async function showQueueItem(){
   pendingPhoto = null; pendingView = null; updatePreview();
   loadingPhoto = true; $('#dropHint').textContent = '⏳ Foto wird verarbeitet …';
   const f = q.files[q.i];
-  try { pendingPhoto = await fileToDataURL(f); }
+  try { pendingPhoto = await queuePhoto(q, q.i); }
   catch(err){
     if (queue !== q) return;
     loadingPhoto = false; bgStats.skipped++;
@@ -1169,6 +1285,7 @@ async function showQueueItem(){
   }
   if (queue !== q) return;
   loadingPhoto = false; updatePreview();
+  queuePhoto(q, q.i + 1);   /* nächstes Foto schon vorbereiten, während Angaben getippt werden */
   const carry = $('#qCarry').checked;
   setDateFields('f', carry ? q.prev.date : '');
   $('#fPlace').value = carry ? q.prev.place : '';
@@ -1208,7 +1325,7 @@ function bgDone(){
 $('#formSkip').addEventListener('click', () => { if (!queue) return; bgStats.skipped++; queue.i++; showQueueItem(); });
 $('#formRest').addEventListener('click', async () => {
   const q = queue; if (!q) return;
-  if (!confirm('Dieses und alle weiteren ' + (q.files.length - q.i - 1) + ' Foto(s) ohne Datum, Ort und Beschreibung speichern? Das lässt sich später über „＋ Datum & Ort ergänzen“ nachholen.')) return;
+  if (!confirm('Dieses und alle weiteren ' + (q.files.length - q.i - 1) + ' Foto(s) ohne Datum, Ort und Beschreibung speichern? Das lässt sich später über ✏️ (Bearbeiten) nachholen.')) return;
   setBusy(true);
   while (queue === q && q.i < q.files.length) {
     $('#qText').textContent = 'Foto ' + (q.i + 1) + ' von ' + q.files.length + ' wird verarbeitet …';
@@ -1415,6 +1532,11 @@ document.addEventListener('keydown', ev => {
   if (lb.open) {
     if (ev.key === 'ArrowLeft') lbStep(-1);
     if (ev.key === 'ArrowRight') lbStep(1);
+  }
+  if (shDlg.open) {
+    if (ev.key === 'ArrowLeft') shStep(-1);
+    if (ev.key === 'ArrowRight') shStep(1);
+    if (ev.key === ' ' && !/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(ev.target.tagName)) { ev.preventDefault(); shPlay(!show.play); }
   }
   if (ev.key === 'Escape' && !$('#intro').classList.contains('hide') && $('#intro').style.display !== 'none') endIntro();
 });
@@ -1783,12 +1905,239 @@ async function removeTrack(id){
   musicBusy(false); renderTrackList();
 }
 
+/* ---------- Diashow ---------- */
+const shDlg = $('#showDlg'), shImg = $('#shImg'), shBar = $('#shBar');
+const show = { mode:'lin', seq:[], i:0, el:0, play:true, ready:false, raf:0, last:0 };
+let shTok = 0;
+function shBuild(keepId){
+  const list = visibleSorted();
+  if (show.mode === 'rnd') {
+    show.seq = shuffle(list);
+    const k = show.seq.findIndex(e => e.id === keepId);
+    if (k > 0) [show.seq[0], show.seq[k]] = [show.seq[k], show.seq[0]];
+    show.i = 0;
+  } else { show.seq = list; show.i = Math.max(0, list.findIndex(e => e.id === keepId)); }
+}
+function shStep(d){
+  const n = show.seq.length;
+  if (n < 2) { show.el = 0; return; }
+  let i = show.i + d;
+  if (i >= n) {
+    if (show.mode === 'rnd') {
+      const last = show.seq[n - 1].id, a = shuffle(visibleSorted());
+      if (a.length > 1 && a[0].id === last) [a[0], a[1]] = [a[1], a[0]];
+      show.seq = a;
+    }
+    i = 0;
+  } else if (i < 0) i = n - 1;
+  show.i = i; shShow();
+}
+async function shShow(){
+  const e = show.seq[show.i]; if (!e) return;
+  const tok = ++shTok;
+  show.ready = false; show.el = 0; shBar.style.transform = 'scaleX(0)';
+  const src = await loadForLb(e);                 /* altes Bild bleibt stehen, bis das neue bereit ist */
+  if (tok !== shTok || !shDlg.open) return;
+  if (src) { shImg.src = src; shImg.classList.remove('in'); void shImg.offsetWidth; shImg.classList.add('in'); }
+  else { shImg.removeAttribute('src'); toast('Ein Foto konnte nicht geladen werden.', 2500); }
+  shImg.alt = altText(e);
+  $('#shDate').textContent = e.date ? fmtDate(e.date) : 'Datum unbekannt';
+  $('#shAge').textContent = ageLabel(state.settings.birth, e.date);
+  const pl = $('#shPlace'); pl.hidden = !e.place; pl.textContent = e.place ? '📍 ' + e.place : '';
+  const ds = $('#shDesc'); ds.hidden = !e.desc; ds.textContent = e.desc || '';
+  $('#shCount').textContent = 'Foto ' + (show.i + 1) + ' von ' + show.seq.length;
+  show.ready = true; show.last = performance.now();
+  const n = show.seq.length;
+  for (let k = 1; k <= 2; k++) { const x = show.seq[(show.i + k) % n]; if (x && x.id !== e.id) loadForLb(x, 'low'); }
+  shKick();
+}
+function shKick(){ if (!show.raf && shDlg.open && show.play) { show.last = performance.now(); show.raf = requestAnimationFrame(shTick); } }
+function shTick(t){
+  show.raf = 0;
+  if (!shDlg.open || !show.play) return;
+  const dt = Math.min(250, Math.max(0, t - show.last)); show.last = t;
+  if (show.ready) {
+    show.el += dt;
+    const D = cfg.showSec * 1000;
+    shBar.style.transform = 'scaleX(' + Math.min(1, show.el / D).toFixed(3) + ')';
+    if (show.el >= D) shStep(1);
+  }
+  show.raf = requestAnimationFrame(shTick);
+}
+function shPlay(on){ show.play = on; $('#shPlay').textContent = on ? '⏸ Pause' : '▶ Weiter'; if (on) shKick(); }
+function shModeUI(){ $('#shLin').setAttribute('aria-pressed', String(show.mode === 'lin')); $('#shRnd').setAttribute('aria-pressed', String(show.mode === 'rnd')); }
+function shSetMode(m){
+  if (show.mode === m) return;
+  const cur = show.seq[show.i];
+  show.mode = m; setPref('showMode', m); shModeUI();
+  shBuild(cur && cur.id); shShow();
+}
+function openShow(){
+  if (!visibleSorted().length) return toast('Noch keine Fotos vorhanden.');
+  show.mode = cfg.showMode; show.raf = 0;
+  shBuild(''); shModeUI(); shPlay(true);
+  $('#shSec').value = cfg.showSec; $('#shSecV').textContent = cfg.showSec + ' s';
+  shDlg.showModal(); shShow();
+}
+$('#showBtn').addEventListener('click', openShow);
+$('#shClose').addEventListener('click', () => shDlg.close());
+$('#shLin').addEventListener('click', () => shSetMode('lin'));
+$('#shRnd').addEventListener('click', () => shSetMode('rnd'));
+$('#shPrev').addEventListener('click', () => shStep(-1));
+$('#shNext').addEventListener('click', () => shStep(1));
+$('#shPlay').addEventListener('click', () => shPlay(!show.play));
+shImg.addEventListener('click', () => shPlay(!show.play));
+$('#shSec').addEventListener('input', ev => {
+  const v = clampInt(ev.target.value, 1, 15, 5);
+  setPref('showSec', v); $('#shSecV').textContent = v + ' s';
+});
+shDlg.addEventListener('close', () => { shTok++; cancelAnimationFrame(show.raf); show.raf = 0; });
+
+/* ---------- Einstellungen: Diashow & Intro ---------- */
+[['pShow', 'showSec'], ['pDelay', 'introDelay'], ['pAuto', 'introAuto']].forEach(([id, k]) => {
+  const inp = $('#' + id);
+  inp.addEventListener('change', () => { setPref(k, clampInt(inp.value, PREF_LIM[k][0], PREF_LIM[k][1], PREF_DEF[k])); inp.value = cfg[k]; });
+});
+$('#settingsBtn').addEventListener('click', () => { $('#pShow').value = cfg.showSec; $('#pDelay').value = cfg.introDelay; $('#pAuto').value = cfg.introAuto; });
+
+/* ---------- Quiz ---------- */
+const quizDlg = $('#quizDlg'), quizBody = $('#quizBody');
+const quiz = { list:[], i:0, got:0, max:0, cur:null };
+const dParts = e => e.date ? e.date.split('-').length : 0;           /* 1 = Jahr, 2 = Monat+Jahr, 3 = Tag+Monat+Jahr */
+const quizPlaceOk = e => !!normPlace(e.place) && placeStats().places.length >= 2;
+const quizPool = () => state.entries.filter(e => e.date || quizPlaceOk(e));
+const qzHeadText = () => 'Frage ' + (quiz.i + 1) + ' von ' + quiz.list.length + ' · ✔ ' + quiz.got + ' von ' + quiz.max + ' richtig';
+function quizHome(){
+  quiz.cur = null;
+  const N = quizPool().length;
+  const base = [5, 10, 20].filter(n => n < N);
+  const sel = el('select', { id:'qzCount' }, ...base.map(n => el('option', { value:String(n), text:n + ' Fotos' })), el('option', { value:String(N), text:'Alle (' + N + ')' }));
+  sel.value = String(base.includes(10) ? 10 : N);
+  quizBody.replaceChildren(
+    el('h2', { text:'🧠 Quiz' }),
+    el('p', { class:'hintline', text:'Gefragt wird nur, was zu einem Foto bekannt ist: Ist nur das Jahr eingetragen, wird nur das Jahr abgefragt – bei Monat oder Tag entsprechend mehr. Der Ort wird als Auswahl aus bis zu 5 bekannten Orten abgefragt.' }),
+    el('div', { class:'field' }, el('label', { for:'qzCount', text:'Anzahl der Fotos' }), sel),
+    el('div', { class:'actions' },
+      el('button', { type:'button', class:'btn', onclick:() => quizDlg.close(), text:'Schließen' }),
+      el('button', { type:'button', class:'btn primary', text:'Quiz starten', onclick:() => {
+        quiz.list = shuffle(quizPool()).slice(0, clampInt(sel.value, 1, N, N));
+        quiz.i = 0; quiz.got = 0; quiz.max = 0; quizAsk();
+      } })));
+}
+function quizAsk(){
+  const e = quiz.list[quiz.i];
+  if (!e) return quizEnd();
+  const dp = dParts(e), hasPlace = quizPlaceOk(e);
+  let opts = [];
+  if (hasPlace) {
+    const key = normPlace(e.place);
+    opts = shuffle([e.place.trim(), ...shuffle(placeStats().places.filter(p => p.key !== key)).slice(0, 4).map(p => p.label)]);
+  }
+  const st = { e, dp, hasPlace, opts, sel:'', checked:false, day:null, mon:null, year:null, optEls:[] };
+  quiz.cur = st;
+  const img = el('img', { class:'qz-img', alt:'Foto zum Quiz' });
+  loadForLb(e).then(src => { if (quiz.cur === st && src) img.src = src; });
+  const nx = quiz.list[quiz.i + 1]; if (nx) loadForLb(nx, 'low');
+  st.head = el('div', { class:'qtext', text:qzHeadText() });
+  const bar = el('div', { class:'qprog' }, el('div', { style:'width:' + (quiz.i / quiz.list.length * 100) + '%' }));
+  let dateBox = null, placeBox = null;
+  if (dp) {
+    const o0 = () => el('option', { value:'', text:'–' });
+    if (dp >= 3) st.day = el('select', { id:'qzDay' }, o0(), ...Array.from({ length:31 }, (_, i) => el('option', { value:String(i + 1), text:String(i + 1) })));
+    if (dp >= 2) st.mon = el('select', { id:'qzMon' }, o0(), ...Array.from({ length:12 }, (_, i) => el('option', { value:String(i + 1), text:monthName(i) })));
+    st.year = el('input', { type:'text', id:'qzYear', inputmode:'numeric', maxlength:'4', placeholder:'JJJJ', autocomplete:'off' });
+    const cell = (id, lab, ctl) => el('div', {}, el('label', { for:id, text:lab }), ctl);
+    dateBox = el('div', { class:'field' },
+      el('span', { class:'lab', text: dp === 1 ? 'In welchem Jahr wurde das Foto aufgenommen?' : dp === 2 ? 'In welchem Monat und Jahr wurde das Foto aufgenommen?' : 'An welchem Datum wurde das Foto aufgenommen?' }),
+      el('div', { class:'dategrid d' + dp },
+        st.day ? cell('qzDay', 'Tag', st.day) : null,
+        st.mon ? cell('qzMon', 'Monat', st.mon) : null,
+        cell('qzYear', 'Jahr', st.year)));
+  }
+  if (hasPlace) {
+    const list = el('div', { class:'qz-opts', role:'radiogroup', 'aria-label':'Ortsauswahl' });
+    st.optEls = opts.map(o => {
+      const b = el('button', { class:'popt', type:'button', role:'radio', 'aria-checked':'false', onclick:() => {
+        if (st.checked) return;
+        st.sel = o;
+        st.optEls.forEach(x => { const on = x.dataset.v === o; x.classList.toggle('sel', on); x.setAttribute('aria-checked', String(on)); });
+      } }, el('span', { text:o }));
+      b.dataset.v = o;
+      return b;
+    });
+    list.append(...st.optEls);
+    placeBox = el('div', { class:'field' }, el('span', { class:'lab', text:'Wo wurde das Foto aufgenommen?' }), list);
+  }
+  st.res = el('div', { 'aria-live':'polite' });
+  st.err = el('p', { class:'err', role:'alert' });
+  st.endBtn = el('button', { type:'button', class:'btn', onclick:() => quizDlg.close(), text:'Beenden' });
+  st.act = el('div', { class:'actions' }, st.endBtn,
+    el('button', { type:'button', class:'btn', onclick:() => quizCheck(true), text:'Weiß ich nicht' }),
+    el('button', { type:'submit', class:'btn primary', text:'Antwort prüfen' }));
+  const form = el('form', { novalidate:'novalidate', onsubmit:ev => { ev.preventDefault(); if (st.checked) quizNext(); else quizCheck(false); } },
+    dateBox, placeBox, st.err, st.res, st.act);
+  quizBody.replaceChildren(el('h2', { text:'🧠 Quiz' }), st.head, bar, img, form);
+}
+function quizCheck(skip){
+  const st = quiz.cur; if (!st || st.checked) return;
+  const e = st.e, a = {};
+  if (!skip) {
+    if (st.dp) {
+      a.y = st.year.value.trim(); a.m = st.mon ? st.mon.value : ''; a.d = st.day ? st.day.value : '';
+      if (!/^\d{4}$/.test(a.y)) { st.err.textContent = 'Bitte ein vierstelliges Jahr eingeben – oder „Weiß ich nicht“ wählen.'; return; }
+      if ((st.mon && !a.m) || (st.day && !a.d)) { st.err.textContent = 'Bitte alle Felder ausfüllen – oder „Weiß ich nicht“ wählen.'; return; }
+    }
+    if (st.hasPlace && !st.sel) { st.err.textContent = 'Bitte einen Ort auswählen – oder „Weiß ich nicht“ wählen.'; return; }
+  }
+  st.err.textContent = ''; st.checked = true;
+  const rows = [];
+  const add = (label, ok, you, right, note) => { rows.push({ label, ok, you, right, note }); quiz.max++; if (ok) quiz.got++; };
+  if (st.dp) {
+    const [y, m, d] = e.date.split('-');
+    if (st.day) add('Tag', !skip && +a.d === +d, a.d, String(+d));
+    if (st.mon) add('Monat', !skip && +a.m === +m, a.m ? monthName(+a.m - 1) : '', monthName(+m - 1));
+    const diff = skip ? 0 : Math.abs(+a.y - +y);
+    add('Jahr', !skip && diff === 0, a.y, y, diff ? diff + (diff === 1 ? ' Jahr' : ' Jahre') + ' daneben' : '');
+  }
+  if (st.hasPlace) add('Ort', !skip && normPlace(st.sel) === normPlace(e.place), st.sel, e.place.trim());
+  rows.forEach(r => st.res.append(el('div', { class:'qz-res ' + (r.ok ? 'ok' : 'bad'),
+    text:(r.ok ? '✔ ' : '✖ ') + r.label + ': ' + (r.ok ? r.right : (r.you ? r.you + ' → richtig: ' : 'richtig: ') + r.right + (r.note ? ' (' + r.note + ')' : '')) })));
+  if (e.desc) st.res.append(el('p', { class:'desc', text:e.desc }));
+  [st.day, st.mon, st.year].forEach(x => { if (x) x.disabled = true; });
+  st.optEls.forEach(b => {
+    b.classList.remove('sel');
+    if (normPlace(b.dataset.v) === normPlace(e.place)) b.classList.add('right');
+    else if (b.dataset.v === st.sel) b.classList.add('wrong');
+  });
+  st.head.textContent = qzHeadText();
+  const last = quiz.i >= quiz.list.length - 1;
+  const nextBtn = el('button', { type:'submit', class:'btn primary', text:last ? 'Ergebnis anzeigen' : 'Weiter →' });
+  st.act.replaceChildren(st.endBtn, nextBtn);
+  nextBtn.focus();
+}
+function quizNext(){ quiz.i++; if (quiz.i >= quiz.list.length) quizEnd(); else quizAsk(); }
+function quizEnd(){
+  quiz.cur = null;
+  const pct = quiz.max ? Math.round(quiz.got / quiz.max * 100) : 0;
+  quizBody.replaceChildren(
+    el('h2', { text:'🧠 Ergebnis' }),
+    el('div', { class:'qz-score', text:quiz.got + ' von ' + quiz.max }),
+    el('p', { class:'hintline', style:'text-align:center', text:pct + ' % der Antworten richtig – ' + (pct >= 80 ? 'stark, du kennst Peters Leben richtig gut! 🎉' : pct >= 50 ? 'solide Leistung! 👍' : 'da ist noch Luft nach oben – die Zeitreise hilft! 😉') }),
+    el('div', { class:'actions' },
+      el('button', { type:'button', class:'btn', onclick:() => quizDlg.close(), text:'Schließen' }),
+      el('button', { type:'button', class:'btn primary', onclick:quizHome, text:'Nochmal spielen' })));
+}
+$('#quizBtn').addEventListener('click', () => {
+  if (!quizPool().length) return toast('Für das Quiz fehlen Fotos mit Datum oder Ort.');
+  quizHome(); quizDlg.showModal();
+});
+
 /* ---------- Konfetti ---------- */
 const cv = $('#confetti'), cx = cv.getContext('2d');
 let parts = [], raf = 0;
 const COLORS = ['#ffc857','#ff6b81','#4ecdc4','#8e7dff','#ffffff','#ff9f43','#7bed9f'];
 function sizeCanvas(){ cv.width = innerWidth; cv.height = innerHeight; }
-addEventListener('resize', sizeCanvas); sizeCanvas();
+let rsT; addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(sizeCanvas, 120); }); sizeCanvas();
 function burst(x, y, n=100, spread=14){
   if (reduceMotion) n = Math.min(n, 18);
   if (parts.length > 500) return;
@@ -1837,14 +2186,16 @@ function buildBalloons(){
     box.append(b);
   }
 }
-function startIntro(){
+function startIntro(delay = 0){
+  introTimers.forEach(t => { clearTimeout(t); clearInterval(t); }); introTimers = [];
+  cancelAnimationFrame(introRaf);
   intro.style.display = '';
   intro.classList.remove('hide');
+  intro.classList.toggle('wait', delay > 0);     /* Wartezeit: nur der Hintergrund, noch keine Animation */
   document.body.classList.add('noscroll');
   $('#introTitle').classList.remove('show');
   $('#enterBtn').classList.remove('show');
   $('#introNum').classList.remove('pop');
-  buildBalloons();
   const num = $('#introNum');
   const finish = () => {
     num.textContent = '60'; num.classList.add('pop');
@@ -1852,17 +2203,24 @@ function startIntro(){
     partyBurst();
     introTimers.push(setInterval(() => burst(Math.random()*innerWidth, innerHeight*(.55 + Math.random()*.4), 70, 16), 1500));
   };
-  if (reduceMotion) { finish(); return; }
-  num.textContent = '0';
-  const t0 = performance.now(), D = 2400;
-  const step = t => {
-    const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 3);
-    num.textContent = Math.round(60 * e);
-    if (p < 1) introRaf = requestAnimationFrame(step); else finish();
+  const begin = () => {
+    intro.classList.remove('wait');
+    buildBalloons();
+    /* spätestens nach X Sekunden automatisch weiter zum Zeitstrahl */
+    introTimers.push(setTimeout(() => { endIntro(); window.scrollTo(0, 0); }, cfg.introAuto * 1000));
+    if (reduceMotion) { finish(); return; }
+    num.textContent = '0';
+    const t0 = performance.now(), D = 2400;
+    const step = t => {
+      const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 3);
+      num.textContent = Math.round(60 * e);
+      if (p < 1) introRaf = requestAnimationFrame(step); else finish();
+    };
+    introRaf = requestAnimationFrame(step);
+    introTimers.push(setTimeout(() => burst(innerWidth*.5, innerHeight*.75, 60, 14), 600));
+    introTimers.push(setTimeout(() => burst(innerWidth*.25, innerHeight*.8, 50, 14), 1400));
   };
-  introRaf = requestAnimationFrame(step);
-  introTimers.push(setTimeout(() => burst(innerWidth*.5, innerHeight*.75, 60, 14), 600));
-  introTimers.push(setTimeout(() => burst(innerWidth*.25, innerHeight*.8, 50, 14), 1400));
+  if (delay > 0) introTimers.push(setTimeout(begin, delay)); else begin();
 }
 function endIntro(){
   introTimers.forEach(t => { clearTimeout(t); clearInterval(t); }); introTimers = [];
@@ -1876,7 +2234,7 @@ $('#skipBtn').addEventListener('click', () => { tryPlayMusic(); endIntro(); });
 $('#partyBtn').addEventListener('click', () => { window.scrollTo(0, 0); startIntro(); });
 
 /* ---------- Start ---------- */
-startIntro();
+startIntro(cfg.introDelay * 1000);
 loadAll().then(() => {
   render();
   autoStartMusic();
