@@ -3943,6 +3943,14 @@
    "place": "Baumberg",
    "desc": "Verlobung",
    "created": 1794590469946
+  },
+  {
+   "id": "5eed973e-4de0-499e-887c-9bf9d3b00617",
+   "photo": "fotos/5eed973e-4de0-499e-887c-9bf9d3b00617.jpg",
+   "date": "1989-02",
+   "place": "",
+   "desc": "",
+   "created": 1794590494106
   }
  ]
 }
