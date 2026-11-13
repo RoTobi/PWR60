@@ -3159,6 +3159,14 @@
    "place": "Baumberg",
    "desc": "Weihnachten",
    "created": 1794588218715
+  },
+  {
+   "id": "db42baef-7bed-4fc7-adf4-96aefc2e6bb3",
+   "photo": "fotos/db42baef-7bed-4fc7-adf4-96aefc2e6bb3.jpg",
+   "date": "2026-06",
+   "place": "Düsseldorf",
+   "desc": "",
+   "created": 1794588250427
   }
  ]
 }
