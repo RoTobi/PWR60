@@ -3359,6 +3359,14 @@
    "place": "MTW",
    "desc": "Weihnachten",
    "created": 1794588557769
+  },
+  {
+   "id": "084e6bb4-0c1b-4cec-a724-527b87676af3",
+   "photo": "fotos/084e6bb4-0c1b-4cec-a724-527b87676af3.jpg",
+   "date": "2001-12",
+   "place": "MTW",
+   "desc": "",
+   "created": 1794588568889
   }
  ]
 }
