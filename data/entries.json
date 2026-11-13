@@ -3839,6 +3839,14 @@
    "place": "Duisburger Hafen",
    "desc": "",
    "created": 1794590154355
+  },
+  {
+   "id": "4cda6c1d-8c7f-42fc-bc16-f6b636798a5d",
+   "photo": "fotos/4cda6c1d-8c7f-42fc-bc16-f6b636798a5d.jpg",
+   "date": "1988",
+   "place": "Duisburger Zoo",
+   "desc": "",
+   "created": 1794590175851
   }
  ]
 }
