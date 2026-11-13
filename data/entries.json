@@ -3047,6 +3047,14 @@
    "place": "MTW",
    "desc": "Weihnachten",
    "created": 1794587527261
+  },
+  {
+   "id": "f9b05a68-11de-4aa9-a1dd-764e0b4bd663",
+   "photo": "fotos/f9b05a68-11de-4aa9-a1dd-764e0b4bd663.jpg",
+   "date": "1998-12",
+   "place": "Baumberg",
+   "desc": "Weihnachten",
+   "created": 1794587575757
   }
  ]
 }
