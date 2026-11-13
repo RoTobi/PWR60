@@ -3863,6 +3863,14 @@
    "place": "Monheim",
    "desc": "Zeugnisverleihung Abitur",
    "created": 1794590196883
+  },
+  {
+   "id": "25f967df-e55b-427b-94be-427e64b29ede",
+   "photo": "fotos/25f967df-e55b-427b-94be-427e64b29ede.jpg",
+   "date": "1992",
+   "place": "Duisburger Hafen",
+   "desc": "",
+   "created": 1794590210899
   }
  ]
 }
